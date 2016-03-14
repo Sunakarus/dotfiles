@@ -203,7 +203,10 @@ mpd_music_dir = /media/Music
 #song_list_format = {%a - }{%t}|{$8%f$9}$R{$3(%l)$9}
 #
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
-song_status_format = "$8%t $1• $2%a $1•{ $5%b $1• }$7%y$1"
+#song_status_format = "$8%t $1• $2%a $1•{ $5%b $1• }$7%y$1"
+song_list_format = "{$5%a} $2»$8»$5» {$8%t}|{$8%f}$R{$2%b}"
+song_status_format = "{$5%a} $2»$8»$5» {$8%t} $b{$7%b}$/b"
+song_library_format = "{%n - }{%t}|{%f}"
 #
 #song_library_format = {%n - }{%t}|{%f}
 #
@@ -215,6 +218,9 @@ song_status_format = "$8%t $1• $2%a $1•{ $5%b $1• }$7%y$1"
 #now_playing_prefix = $b
 #
 #now_playing_suffix = $/b
+#now_playing_prefix = "$u$2"
+#
+#now_playing_suffix = "$2$/u$2"
 #
 #browser_playlist_prefix = "$2playlist$9 "
 #
@@ -278,6 +284,7 @@ song_status_format = "$8%t $1• $2%a $1•{ $5%b $1• }$7%y$1"
 ##
 #
 #song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
+song_columns_list_format = "(10)[black]{l} (30)[blue]{a} (30)[green]{b} (30)[magenta]{t}"
 #
 ##### various settings #####
 #
@@ -291,13 +298,16 @@ song_status_format = "$8%t $1• $2%a $1•{ $5%b $1• }$7%y$1"
 #
 #playlist_show_remaining_time = no
 #
-#playlist_shorten_total_times = no
+playlist_shorten_total_times = no
 #
 #playlist_separate_albums = no
 #
 ##
 ## Note: Possible display modes: classic, columns.
 ##
+playlist_display_mode = "classic" (classic/columns)
+browser_display_mode = "classic" (classic/columns)
+search_engine_display_mode = "classic" (classic/columns)
 #playlist_display_mode = columns
 #
 #browser_display_mode = classic
@@ -316,7 +326,7 @@ song_status_format = "$8%t $1• $2%a $1•{ $5%b $1• }$7%y$1"
 #
 #autocenter_mode = no
 #
-#centered_cursor = no
+centered_cursor = no
 #
 ##
 ## Note: You can specify third character which will
@@ -437,15 +447,15 @@ screen_switcher_mode = playlist, media_library, playlist_editor
 ## "The" word while sorting items in browser, tags in
 ## media library, etc.
 ##
-#ignore_leading_the = no
+ignore_leading_the = yes
 #
 #block_search_constraints_change_if_items_found = yes
 #
-#mouse_support = yes
+mouse_support = yes
 #
-#mouse_list_scroll_whole_page = yes
+mouse_list_scroll_whole_page = yes
 #
-#empty_tag_marker = <empty>
+empty_tag_marker = <empty>
 #
 #tags_separator = " | "
 #
@@ -469,7 +479,7 @@ screen_switcher_mode = playlist, media_library, playlist_editor
 #
 #search_engine_default_search_mode = 1
 #
-#external_editor = nano
+external_editor = vim
 #
 ## Note: set to yes if external editor is a console application.
 ##
@@ -527,4 +537,41 @@ screen_switcher_mode = playlist, media_library, playlist_editor
 #window_border_color = green
 #
 #active_window_border = red
+#
+
+colors_enabled = "yes"
+
+empty_tag_color = "white"
+#
+header_window_color = "white"
+#
+volume_color = "blue"
+#
+state_line_color = "white"
+#
+state_flags_color = "white"
+#
+main_window_color = "blue"
+#
+#color1 = "red"
+#
+#color2 = "blue"
+#
+main_window_highlight_color = "white"
+#
+progressbar_color = "black"
+#
+progressbar_elapsed_color = "cyan"
+#
+statusbar_color = "red"
+#
+alternative_ui_separator_color = "white"
+#
+active_column_color = "white"
+#
+visualizer_color = "white"
+#
+#window_border_color = "green"
+#
+active_window_border = "red"
 #
