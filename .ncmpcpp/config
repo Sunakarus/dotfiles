@@ -343,6 +343,9 @@ centered_cursor = no
 ##
 #progressbar_look = =>
 progressbar_look = "─╼╌"
+#progressbar_look = "▉▉▉"
+#
+#progressbar_boldness = "yes"
 #
 #progressbar_boldness = yes
 #
@@ -431,9 +434,8 @@ screen_switcher_mode = playlist, media_library, playlist_editor, visualizer
 ## Acceptable values are from 20 to 80.
 ##
 #
-#locked_screen_width_part = 50
-#
-#ask_for_locked_screen_width_part = yes
+locked_screen_width_part = 50
+ask_for_locked_screen_width_part = no
 #
 #jump_to_now_playing_song_at_start = yes
 #

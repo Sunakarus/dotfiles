@@ -108,4 +108,4 @@ alias shutdown="shutdown now"
 alias docprint='lpr -H ipp.doc.ic.ac.uk -U htn15 -P ICTMono'
 alias fehsvg="feh --magick-timeout 1"
 alias syu="yaourt -Syu"
-alias ncm="ncmpcpp"
+alias ncm="ncmpcpp -s playlist -S visualizer"
