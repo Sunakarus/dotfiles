@@ -572,13 +572,13 @@ main_window_highlight_color = "white"
 #
 progressbar_color = "black"
 #
-progressbar_elapsed_color = "cyan"
+progressbar_elapsed_color = "blue"
 #
 statusbar_color = "red"
 #
 alternative_ui_separator_color = "white"
 #
-active_column_color = "white"
+active_column_color = "red"
 #
 visualizer_color = "white"
 #

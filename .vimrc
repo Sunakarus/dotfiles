@@ -40,6 +40,12 @@ let g:gruvbox_contrast_dark="medium"
 set background=dark
 colorscheme gruvbox
 
+"persistent undo history
+if has("persistent_undo")
+    set undodir=~/.vim/undodir/
+    set undofile
+endif
+
 let $LANG='en_US'
 set cursorline
 set history=10000
