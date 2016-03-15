@@ -2,6 +2,7 @@ xterm*faceName: DejaVu Sans Mono for Powerline:size=8:antialias=false
 !xterm*faceName: Terminess Powerline:size=8:antialias=false
 !xterm*faceName: Font Awesome:size=8:antialias=false
 xterm*locale: true
+URxvt*faceName: DejaVu Sans Mono for Powerline:size=8:antialias=false
 URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
 URxvt.url-select.launcher:  chromium
 URxvt.url-select.underline: true

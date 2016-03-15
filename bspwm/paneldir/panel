@@ -123,7 +123,9 @@ done > $PANEL_FIFO &
 
 . panel_colors
 
-panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+UNDERLINE_THICKNESS=1
+
+panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "$COLOR_UNDERLINE" -u $UNDERLINE_THICKNESS | sh &
 
 wid=$(xdo id -a "$PANEL_WM_NAME")
 tries_left=20
