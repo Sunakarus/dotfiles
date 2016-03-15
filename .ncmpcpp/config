@@ -106,7 +106,7 @@ visualizer_look = "●▉"
 #
 #visualizer_look = ●▮
 #
-#visualizer_color = blue, cyan, green, yellow, magenta, red
+visualizer_color = white, blue, cyan, green, yellow, magenta, red
 #
 ## Alternative subset of 256 colors for terminals that support it.
 ##
@@ -580,7 +580,7 @@ alternative_ui_separator_color = "white"
 #
 active_column_color = "red"
 #
-visualizer_color = "white"
+#visualizer_color = "white"
 #
 #window_border_color = "green"
 #
