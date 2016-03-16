@@ -13,9 +13,15 @@ curr=1
 
 for d in */ ; do
     cd $d
-    echo "[$curr/$total] $(git config --get remote.origin.url)"
-    echo "git clone $(git config --get remote.origin.url)" >> ../$file
-    git pull
+    url=$(git config --get remote.origin.url)
+    if [[ ! -z $url ]] && [[ $url != *"Sunakarus/dotfiles"* ]]
+    then
+        echo "[$curr/$total] $url"
+        echo "git clone $url" >> ../$file
+        #git pull
+    else
+        echo "[$curr/$total] Not a git repository, skipping..."
+    fi
     curr=$[$curr+1]
     cd ..
 done
