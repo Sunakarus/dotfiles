@@ -1,6 +1,9 @@
 #! /bin/sh
 
 setxkbmap -layout cz -variant qwerty_bksl
+
+eval $(keychain --eval --quiet id_rsa)
+
 light-locker &
 mpd &
 sh ~/.fehbg &
