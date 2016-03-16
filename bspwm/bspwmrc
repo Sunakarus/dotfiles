@@ -29,6 +29,7 @@ bspc monitor -d I II III IV V VI
 
 bspc rule -a Gimp state=floating follow=on
 bspc rule -a Xdialog state=floating
+bspc rule -a pavucontrol state=floating
 bspc rule -a steam floating=on
 
 #bspc rule -a mplayer2 state=floating

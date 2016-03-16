@@ -29,7 +29,7 @@ while read -r line ; do
             ;;
         V*)
             # alsa volume
-            volume="%{F$COLOR_VOLUME}%{B$COLOR_SYS_BG}$PADDING${line#?} %{B-}%{F-}"
+            volume="%{F$COLOR_VOLUME}%{B$COLOR_SYS_BG}%{A:sh volume.sh & disown:}$PADDING${line#?} %{A}%{B-}%{F-}"
             ;;
         M*)
             # current track
