@@ -1,4 +1,4 @@
-# pATH TO your oh-my-zsh installation.
+# PATH TO your oh-my-zsh installation.
 export ZSH=/home/akarus/.oh-my-zsh
 
 # Set name of the theme to load.
@@ -80,6 +80,7 @@ export TERM=xterm-256color
 # z
 [[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
 
+# pdf
 function openPdf {
     zathura $1 &
     disown
@@ -87,6 +88,10 @@ function openPdf {
 
 # says what package commands are in
 source /usr/share/doc/pkgfile/command-not-found.zsh
+
+# add SSH key to keychain
+eval $(keychain --eval --quiet id_rsa)
+
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
