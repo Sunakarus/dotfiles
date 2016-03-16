@@ -8,10 +8,14 @@ fi
 touch $file
 chmod +x $file
 
+total=$(ls -l | grep -c ^d)
+curr=1
+
 for d in */ ; do
     cd $d
-    echo "$(git config --get remote.origin.url)"
+    echo "[$curr/$total] $(git config --get remote.origin.url)"
     echo "git clone $(git config --get remote.origin.url)" >> ../$file
     git pull
+    curr=$[$curr+1]
     cd ..
 done
