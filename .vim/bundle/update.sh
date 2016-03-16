@@ -18,7 +18,7 @@ for d in */ ; do
     then
         echo "[$curr/$total] $url"
         echo "git clone $url" >> ../$file
-        #git pull
+        git pull
     else
         echo "[$curr/$total] Not a git repository, skipping..."
     fi
