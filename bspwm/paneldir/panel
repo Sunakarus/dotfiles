@@ -37,7 +37,7 @@ then
                 SYMBOL="" # 2/4
             else if [ $BAT_LEVEL_1 -lt 40 ] && [ $BAT_LEVEL_1 -ge 10 ];
             then
-                SYMBOL="" # full battery
+                SYMBOL="" # 1/4
             else
                 SYMBOL="" # empty 
             fi
@@ -48,7 +48,6 @@ fi
 if [ $BAT_LEVEL_1 == 100 ];
 then
     echo "B$SYMBOL $BAT_LEVEL_1%"
-    #echo "B BAT:$BAT_LEVEL_1"
 else
     if [[ $(battery) == "Charging"* ]]
     then

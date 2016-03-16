@@ -57,10 +57,9 @@ visualizer_fifo_path = "/tmp/mpd.fifo"
 visualizer_output_name = "my_fifo"
 visualizer_sync_interval = "30" 
 visualizer_in_stereo = "yes"
-#visualizer_type = "wave" (spectrum/wave)
-visualizer_type = "spectrum"
-#visualizer_look = "+|"
-visualizer_look = "●▉"
+visualizer_type = "spectrum" (spectrum/wave)
+#visualizer_look = "●▉"
+visualizer_look = "∙▋"
 
 #visualizer_fifo_path = /tmp/mpd.fifo
 #
@@ -210,13 +209,13 @@ visualizer_color = white, blue, cyan, green, yellow, magenta, red
 ##
 #
 #song_list_format = {%a - }{%t}|{$8%f$9}$R{$3(%l)$9}
-#
+
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
 #song_status_format = "$8%t $1• $2%a $1•{ $5%b $1• }$7%y$1"
 song_list_format = "{$5%a} $2»$8»$5» {$8%t}|{$8%f}$R{$2%b $8| $5%l}"
-song_status_format = "{$5%a} $2»$8»$5» {$8%t} $b{$7%b}$/b"
+song_status_format = "{$5%a} $2»$8»$5» {$8%t} » $b{$2%b$9}$/b"
 song_library_format = "{%n - }{%t}|{%f}"
-#
+
 #song_library_format = {%n - }{%t}|{%f}
 #
 #
@@ -225,8 +224,8 @@ song_library_format = "{%n - }{%t}|{%f}"
 #alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
 #
 #now_playing_prefix = $b
-#
-#now_playing_suffix = $/b
+now_playing_prefix = "$b$2» "
+now_playing_suffix = $/b
 #now_playing_prefix = "$u$2"
 #
 #now_playing_suffix = "$2$/u$2"
@@ -255,6 +254,7 @@ song_library_format = "{%n - }{%t}|{%f}"
 #
 #browser_sort_format = {%a - }{%t}|{%f} {(%l)}
 #
+
 ##### columns settings #####
 ##
 ## syntax of song columns list format is "column column etc."
@@ -291,10 +291,10 @@ song_library_format = "{%n - }{%t}|{%f}"
 ##   tag and then composer and performer if previous ones are
 ##   not available.
 ##
-#
+
 #song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
 song_columns_list_format = "(10)[black]{l} (30)[blue]{a} (30)[green]{b} (30)[magenta]{t}"
-#
+
 ##### various settings #####
 #
 ##
@@ -342,10 +342,9 @@ centered_cursor = no
 ## be used to build 'empty' part of progressbar.
 ##
 #progressbar_look = =>
-progressbar_look = "─╼╌"
+#progressbar_look = "─╼╌"
+progressbar_look = "▀▀▀"
 #progressbar_look = "▉▉▉"
-#
-#progressbar_boldness = "yes"
 #
 #progressbar_boldness = yes
 #
@@ -464,7 +463,7 @@ ignore_leading_the = yes
 #
 mouse_support = yes
 #
-mouse_list_scroll_whole_page = yes
+mouse_list_scroll_whole_page = no
 #
 empty_tag_marker = <empty>
 #
