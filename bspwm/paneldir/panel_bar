@@ -28,7 +28,15 @@ while read -r line ; do
             battery="%{F$BAT_COLOR}%{B$COLOR_SYS_BG}$PADDING${line#?}%{B-}%{F-}"
             ;;
         E*)
-            est_time="%{F$BAT_COLOR}%{B$COLOR_SYS_BG}${line#?} %{B-}%{F-}"
+            if [[ $line == *'+' ]] #charging
+            then
+                est_time_color=$COLOR_TITLE_FG
+            fi
+            if [[ $line == *'-' ]] #discharging
+            then
+                est_time_color=$BAT_COLOR
+            fi
+            est_time="%{F$est_time_color}%{B$COLOR_SYS_BG}${line#?} %{B-}%{F-}"
             ;;
         V*)
             # alsa volume
