@@ -59,6 +59,20 @@ fi
 sleep 1;
 done > "$PANEL_FIFO" &
 
+#estimated time
+while true;
+do
+BAT_LEVEL_1=$(battery | cut -d' ' -f2)
+ESTIMATED_TIME=$(acpi | cut -d' ' -f5)
+if [[ $BAT_LEVEL_1 -lt 100 ]] && [[ $(battery) == "Discharging"* ]]
+then
+    echo "E  $ESTIMATED_TIME"
+else
+    echo "E"
+fi
+sleep 10;
+done > "$PANEL_FIFO" &
+
 # current track
 while true;
 do

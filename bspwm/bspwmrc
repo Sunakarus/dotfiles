@@ -1,6 +1,7 @@
 #! /bin/sh
 
 setxkbmap -layout cz -variant qwerty_bksl
+xset b off
 
 light-locker &
 mpd &
@@ -8,6 +9,7 @@ sh ~/.fehbg &
 compton --conf ~/.config/compton.conf &
 export _JAVA_AWT_WM_NONREPARENTING=1 &
 wmname LG3D &
+dunst &
 
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &

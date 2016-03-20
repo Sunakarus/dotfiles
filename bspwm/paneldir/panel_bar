@@ -25,7 +25,10 @@ while read -r line ; do
                 fi
             fi
         fi
-            battery="%{F$BAT_COLOR}%{B$COLOR_SYS_BG}$PADDING${line#?} %{B-}%{F-}"
+            battery="%{F$BAT_COLOR}%{B$COLOR_SYS_BG}$PADDING${line#?}%{B-}%{F-}"
+            ;;
+        E*)
+            est_time="%{F$BAT_COLOR}%{B$COLOR_SYS_BG}${line#?} %{B-}%{F-}"
             ;;
         V*)
             # alsa volume
@@ -181,6 +184,6 @@ while read -r line ; do
 			;;
 	esac
     power=" %{F$COLOR_POWER_BUTTON}%{B${BG}}%{A:sh shutdowndialog.sh & disown:} %{A}%{B-}%{F-} "
-	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}| ${battery}|${wifi}| ${volume}|${date}|${sys}|${power}"
+	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}| ${battery}${est_time}|${wifi}| ${volume}|${date}|${sys}|${power}"
 
 done
