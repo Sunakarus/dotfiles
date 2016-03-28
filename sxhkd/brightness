@@ -1,0 +1,50 @@
+#!/bin/sh
+
+bl=$(xbacklight | cut -d'.' -f1)
+
+#color1="#F7E599'>"
+#color2="#F7E081'>"
+#color2="#F7DB68'>"
+#color3="#F7DB68'>"
+#color4="#F5CF38'>"
+#color5="#F5CC27'>"
+#color6="#F7CA16'>"
+#color7="#FACB0F'>"
+color8="#F7C600'>"
+col="<span color='"
+end="</span>"
+msg=""
+
+if (( 0 <= $bl && $bl <= 9))
+then
+    msg="$col$color8•$end○○○○○○○○○"
+elif (( 10 <= $bl && $bl <= 19))
+then
+    msg="$col$color8••$end○○○○○○○○"
+elif (( 20 <= $bl && $bl <= 29))
+then
+    msg="$col$color8•••$end○○○○○○○"
+elif (( 30 <= $bl && $bl <= 39))
+then
+    msg="$col$color8••••$end○○○○○○"
+elif (( 40 <= $bl && $bl <= 49))
+then
+    msg="$col$color8•••••$end○○○○○"
+elif (( 50 <= $bl && $bl <= 59))
+then
+    msg="$col$color8••••••$end○○○○"
+elif (( 60 <= $bl && $bl <= 69))
+then
+    msg="$col$color8•••••••$end○○○"
+elif (( 70 <= $bl && $bl <= 79))
+then
+    msg="$col$color8••••••••$end○○"
+elif (( 80 <= $bl && $bl <= 89))
+then
+    msg="$col$color8•••••••••$end○"
+elif (( 90 <= $bl && $bl <= 100))
+then
+    msg="$col$color8••••••••••$end"
+fi
+
+notify-send "Brightness" "$msg" -t 1

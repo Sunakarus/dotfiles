@@ -32,7 +32,7 @@
     
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
-    alignment = left
+    alignment = center
     
     # The frequency with wich text that is longer than the notification
     # window allows bounces back and forth.
@@ -115,7 +115,7 @@
     # Draw a line of "separatpr_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 2
+    separator_height = 1
     
     # Padding between text and separator.
     padding = 8
@@ -178,12 +178,12 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#333232"
     foreground = "#ed9555"
-    timeout = 10
+    timeout = 0
 
 [urgency_normal]
     background = "#333232"
     foreground = "#d6d3d2"
-    timeout = 10
+    timeout = 0
 
 [urgency_critical]
     background = "#333232"

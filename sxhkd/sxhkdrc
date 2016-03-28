@@ -2,10 +2,10 @@
 # wm independent hotkeys
 #
 XF86MonBrightnessUp
-    xbacklight -inc 10
+    xbacklight -inc 10;./dotfiles/sxhkd/brightness
 
 XF86MonBrightnessDown
-    xbacklight -dec 10
+    xbacklight -dec 10;./dotfiles/sxhkd/brightness
 
 XF86AudioLowerVolume
     amixer -q sset Master 3%-
