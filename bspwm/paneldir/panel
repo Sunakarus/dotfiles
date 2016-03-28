@@ -63,8 +63,8 @@ done > "$PANEL_FIFO" &
 while true;
 do
 BAT_LEVEL_1=$(battery | cut -d' ' -f2)
-ESTIMATED_TIME=$(acpi | cut -d' ' -f5 | cut -c 1-5)
-if [ $BAT_LEVEL_1 == 100 ];
+ESTIMATED_TIME=$(acpi | cut -d' ' -f5 | cut -d':' -f1-2)
+if [ $BAT_LEVEL_1 == 100 ] || [[ ! $ESTIMATED_TIME == *":"* ]];
 then
     echo "E"
 else
@@ -75,7 +75,7 @@ else
         echo "E  $ESTIMATED_TIME+"
     fi
 fi
-sleep 1;
+sleep 5;
 done > "$PANEL_FIFO" &
 
 # current track
