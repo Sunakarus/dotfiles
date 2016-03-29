@@ -47,4 +47,4 @@ then
     msg="$col$color8••••••••••$end"
 fi
 
-notify-send "Brightness" "$msg" -t 1
+notify-send "Brightness: $bl%" "$msg" -t 1
