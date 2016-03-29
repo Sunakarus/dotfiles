@@ -92,6 +92,9 @@ source /usr/share/doc/pkgfile/command-not-found.zsh
 # add SSH key to keychain
 eval $(keychain --eval --quiet id_rsa)
 
+# make ls colors more readable
+eval "$(dircolors ~/.dircolors)";
+
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -106,7 +109,7 @@ alias quit="exit"
 alias pdf="openPdf"
 alias v="vim"
 alias vi="vim"
-alias ls="ls -l --color"
+alias ls="ls -lh --color"
 alias svim="sudo -E vim"
 alias xreload="xrdb ~/.Xresources"
 alias shutdown="shutdown now"
