@@ -54,24 +54,16 @@ plugins=(git colored-man-pages safe-paste zsh-autosuggestions zsh-syntax-highlig
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 # export MANPATH="/usr/local/man:$MANPATH"
-
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-#if [[ -n $SSH_CONNECTION ]]; then
+# Preferred editor
 export EDITOR='vim'
-#else
-  #export EDITOR='mvim'
-#fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 setopt NO_BEEP
 setopt NO_FLOW_CONTROL
@@ -95,6 +87,9 @@ eval $(keychain --eval --quiet id_rsa)
 # make ls colors more readable
 eval "$(dircolors ~/.dircolors)";
 
+# colored completion - use LS_COLORS
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -109,7 +104,7 @@ alias quit="exit"
 alias pdf="openPdf"
 alias v="vim"
 alias vi="vim"
-alias ls="ls -lh --color"
+alias ls="ls -lh --color=auto"
 alias svim="sudo -E vim"
 alias xreload="xrdb ~/.Xresources"
 alias shutdown="shutdown now"
