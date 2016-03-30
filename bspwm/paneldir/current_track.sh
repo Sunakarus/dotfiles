@@ -12,13 +12,11 @@ then
         if [[ -z $track ]]
         then
             echo ""
+        elif [[ -n $(mpc status | grep paused) ]]
+        then
+            track="$track " #paused
         else
-            if [[ -n $(mpc status | grep paused) ]]
-            then
-                track="$track " #paused
-            else
-                track="$track " #playing
-            fi
+            track="$track " #playing
         fi
     else
         echo "MPD off"
@@ -27,6 +25,7 @@ else
     track="$track " #spotify
 fi
 
+# truncate tracks that are too long
 if [ ${#track} -ge 1 ]
 then
     maxlen=60

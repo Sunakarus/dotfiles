@@ -1,6 +1,8 @@
 [global]
     #font = "DejaVu Sans Mono for Powerline 8"
     font = "Dunst 8"
+    # See link below, 'Dunst' is an alias for Terminus with anti-aliasing turned off
+    # http://askubuntu.com/questions/32727/how-do-i-turn-off-font-pixel-antialiasing-only-in-terminal
     
     # Allow a small subset of html markup:
     #   <b>bold</b>

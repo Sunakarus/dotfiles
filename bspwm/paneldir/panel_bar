@@ -16,23 +16,20 @@ while read -r line ; do
             if [ "$batNum" -ge "0" ] && [ "$batNum" -le "10" ];
             then
                 BAT_COLOR=$COLOR_BATTERY_DEAD
-            else if [ "$batNum" -gt "10" ] && [ "$batNum" -le "50" ];
+            elif [ "$batNum" -gt "10" ] && [ "$batNum" -le "50" ];
             then
                 BAT_COLOR=$COLOR_BATTERY_LOW
-                else if [ "$batNum" -gt "50" ] && [ "$batNum" -le "75" ];
-                    then
-                    BAT_COLOR=$COLOR_BATTERY_MID
-                fi
+            elif [ "$batNum" -gt "50" ] && [ "$batNum" -le "75" ];
+            then
+                BAT_COLOR=$COLOR_BATTERY_MID
             fi
-        fi
             battery="%{F$BAT_COLOR}%{B$COLOR_SYS_BG}$PADDING${line#?}%{B-}%{F-}"
             ;;
         E*)
             if [[ $line == *'+' ]] #charging
             then
                 est_time_color=$COLOR_TITLE_FG
-            fi
-            if [[ $line == *'-' ]] #discharging
+            elif [[ $line == *'-' ]] #discharging
             then
                 est_time_color=$BAT_COLOR
             fi
@@ -48,12 +45,10 @@ while read -r line ; do
             if [[ $line == *"MPD off" ]]
             then
                 bat_color=$COLOR_WIFI_DISCONNECTED
-            fi
-            if [[ $line == *''* ]] #paused
+            elif [[ $line == *''* ]] #paused
             then
                 bat_color=$COLOR_MUSIC_PAUSED
-            fi
-            if [[ $line == *''* ]] #spotify
+            elif [[ $line == *''* ]] #spotify
             then
                 bat_color=$COLOR_SPOTIFY
             fi
@@ -65,11 +60,10 @@ while read -r line ; do
             WIFI_COLOR=$COLOR_WIFI_CONNECTING
             if [[ $line == *""* ]]
             then
-                  WIFI_COLOR=$COLOR_WIFI_CONNECTED
-                  else if [[ $line == *""* ]]
-                  then
-                  WIFI_COLOR=$COLOR_WIFI_DISCONNECTED
-              fi
+                WIFI_COLOR=$COLOR_WIFI_CONNECTED
+            elif [[ $line == *""* ]]
+            then
+                WIFI_COLOR=$COLOR_WIFI_DISCONNECTED
             fi
             wifi="%{F$WIFI_COLOR}%{B$COLOR_SYS_BG}%{A:sh toggle_wpa_gui.sh & disown:}$PADDING${line#?} %{A}%{B-}%{F-}"
             ;;

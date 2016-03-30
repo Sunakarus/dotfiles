@@ -29,32 +29,27 @@ SYMBOL="" # full battery
 if [ $BAT_LEVEL_1 -le 100 ] && [ $BAT_LEVEL_1 -ge 90 ];
 then
     SYMBOL="" # full battery
-    else if [ $BAT_LEVEL_1 -lt 90 ] && [ $BAT_LEVEL_1 -ge 75 ];
-        then
-            SYMBOL="" # 3/4
-            else if [ $BAT_LEVEL_1 -lt 75 ] && [ $BAT_LEVEL_1 -ge 40 ];
-            then
-                SYMBOL="" # 2/4
-            else if [ $BAT_LEVEL_1 -lt 40 ] && [ $BAT_LEVEL_1 -ge 10 ];
-            then
-                SYMBOL="" # 1/4
-            else
-                SYMBOL="" # empty 
-            fi
-        fi
-    fi
+elif [ $BAT_LEVEL_1 -lt 90 ] && [ $BAT_LEVEL_1 -ge 75 ];
+then
+    SYMBOL="" # 3/4
+elif [ $BAT_LEVEL_1 -lt 75 ] && [ $BAT_LEVEL_1 -ge 40 ];
+then
+    SYMBOL="" # 2/4
+elif [ $BAT_LEVEL_1 -lt 40 ] && [ $BAT_LEVEL_1 -ge 10 ];
+then
+    SYMBOL="" # 1/4
+else
+    SYMBOL="" # empty 
 fi
 
 if [ $BAT_LEVEL_1 == 100 ];
 then
     echo "B$SYMBOL $BAT_LEVEL_1%"
+elif [[ $(battery) == "Charging"* ]]
+then
+    echo "B $SYMBOL $BAT_LEVEL_1%"
 else
-    if [[ $(battery) == "Charging"* ]]
-    then
-        echo "B $SYMBOL $BAT_LEVEL_1%"
-    else
-        echo "B$SYMBOL $BAT_LEVEL_1%"
-    fi
+    echo "B$SYMBOL $BAT_LEVEL_1%"
 fi
 sleep 1;
 done > "$PANEL_FIFO" &
@@ -67,13 +62,11 @@ ESTIMATED_TIME=$(acpi | cut -d' ' -f5 | cut -d':' -f1-2)
 if [ $BAT_LEVEL_1 == 100 ] || [[ ! $ESTIMATED_TIME == *":"* ]];
 then
     echo "E"
+elif [[ $(battery) == "Discharging"* ]]
+then
+    echo "E  $ESTIMATED_TIME-"
 else
-    if [[ $(battery) == "Discharging"* ]]
-    then
-        echo "E  $ESTIMATED_TIME-"
-    else
-        echo "E  $ESTIMATED_TIME+"
-    fi
+    echo "E  $ESTIMATED_TIME+"
 fi
 sleep 5;
 done > "$PANEL_FIFO" &
@@ -120,13 +113,11 @@ WIFI_IP=$(ifconfig wlp9s0 | grep "inet " | cut -d' ' -f10)
   if [ -z "$WIFI_SSID" ];
   then
     echo "L  Disconnected "
+  elif [ ! -z "$WIFI_IP" ];
+  then
+    echo "L  $WIFI_SSID " #connected
   else
-    if [ ! -z "$WIFI_IP" ];
-        then
-        echo "L  $WIFI_SSID " #connected
-    else
-        echo L' ' $WIFI_SSID
-    fi
+    echo L' ' $WIFI_SSID
   fi
   sleep 1
 done > $PANEL_FIFO &
