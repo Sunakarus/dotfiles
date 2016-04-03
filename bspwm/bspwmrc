@@ -1,7 +1,11 @@
 #! /bin/sh
 
+# set keyboard layout
 setxkbmap -layout cz -variant qwerty_bksl
 xset b off
+
+# set screen timeout
+xset s 3600 3600 -dpms
 
 light-locker &
 mpd &
@@ -16,7 +20,7 @@ autocutsel -selection PRIMARY -fork &
 
 sxhkd &
 
-bspc config border_width         1
+bspc config border_width         2
 bspc config active_border_color  "#7FD4F0"
 bspc config focused_border_color "#7FD4F0"
 bspc config window_gap          10
