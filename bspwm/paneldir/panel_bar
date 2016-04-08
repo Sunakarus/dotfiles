@@ -41,20 +41,24 @@ while read -r line ; do
             ;;
         M*)
             # current track
-            bat_color=$COLOR_MUSIC_PLAYING
+            music_color=$COLOR_MUSIC_PLAYING
+            track_color=$COLOR_MUSIC_PLAYING_TRACK
             if [[ $line == *"MPD off" ]]
             then
-                bat_color=$COLOR_WIFI_DISCONNECTED
+                music_color=$COLOR_WIFI_DISCONNECTED
             elif [[ $line == *''* ]] #paused
             then
-                bat_color=$COLOR_MUSIC_PAUSED
+                music_color=$COLOR_MUSIC_PAUSED
+                track_color=$COLOR_MUSIC_PAUSED_TRACK
             elif [[ $line == *''* ]] #spotify
             then
-                bat_color=$COLOR_SPOTIFY
+                music_color=$COLOR_SPOTIFY
+                track_color=$COLOR_SPOTIFY_TRACK
             fi
+            under_color=$COLOR_UNDERLINE
             #underline track name
-            track=$(echo "$line" | sed 's/\ -\ \(.*\)\(..\)$/\ -\ %{U$COLOR_UNDERLINE}%{+u}\1%{-u}%{U-}\2/')
-            track="%{F$bat_color}%{B$COLOR_SYS_BG}$PADDING${track#?} %{B-}%{F-}"
+            track=$(echo "$line" | sed "s/\ -\ \(.*\)\(..\)$/\ -\ %{F$track_color}%{U$under_color}%{+u}\1%{-u}%{U-}%{F$music_color}\2/")
+            track="%{F$music_color}%{B$COLOR_SYS_BG}$PADDING${track#?} %{B-}%{F-}"
             ;;
         L*)
             # wifi link
