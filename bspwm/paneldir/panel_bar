@@ -52,8 +52,9 @@ while read -r line ; do
             then
                 bat_color=$COLOR_SPOTIFY
             fi
-
-            track="%{F$bat_color}%{B$COLOR_SYS_BG}$PADDING${line#?} %{B-}%{F-}"
+            #underline track name
+            track=$(echo "$line" | sed 's/\ -\ \(.*\)\(..\)$/\ -\ %{U$COLOR_UNDERLINE}%{+u}\1%{-u}%{U-}\2/')
+            track="%{F$bat_color}%{B$COLOR_SYS_BG}$PADDING${track#?} %{B-}%{F-}"
             ;;
         L*)
             # wifi link

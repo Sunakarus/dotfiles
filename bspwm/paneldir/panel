@@ -19,45 +19,45 @@ bspc subscribe report > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
 clock -sf 'S%H:%M' > "$PANEL_FIFO" &
 
-MAXLEN=60
-function current_track {
-    if [ $(pgrep -xo spotify) ]
-    then
-        track=$(python2 ./.config/bspwm/paneldir/spotify.py)
-    fi
+#MAXLEN=60
+#function current_track {
+    #if [ $(pgrep -xo spotify) ]
+    #then
+        #track=$(python2 ./.config/bspwm/paneldir/spotify.py)
+    #fi
 
-    if [[ -z $track ]]
-    then
-        if [ $(pgrep -x mpd) ]
-        then
-            track=$(mpc current)
-            if [[ -z $track ]]
-            then
-                echo ""
-            fi
-        else
-            echo "MPD off"
-        fi
-    fi
+    #if [[ -z $track ]]
+    #then
+        #if [ $(pgrep -x mpd) ]
+        #then
+            #track=$(mpc current)
+            #if [[ -z $track ]]
+            #then
+                #echo ""
+            #fi
+        #else
+            #echo "MPD off"
+        #fi
+    #fi
 
-    if [ ${#track} -ge 1 ]
-    then
-        echo "$track"
-    fi
-}
+    #if [ ${#track} -ge 1 ]
+    #then
+        #echo "$track"
+    #fi
+#}
 
-function current_track_symbol {
-    if [[ -n $(mpc status | grep paused) ]]
-    then
-        TRACK_SYMBOL="" #paused
-    elif [[ -n $(mpc status | grep playing) ]]
-    then
-        TRACK_SYMBOL="" #playing
-    else
-        TRACK_SYMBOL="" #spotify
-    fi
-    echo "$TRACK_SYMBOL"
-}
+#function current_track_symbol {
+    #if [[ -n $(mpc status | grep paused) ]]
+    #then
+        #TRACK_SYMBOL="" #paused
+    #elif [[ -n $(mpc status | grep playing) ]]
+    #then
+        #TRACK_SYMBOL="" #playing
+    #else
+        #TRACK_SYMBOL="" #spotify
+    #fi
+    #echo "$TRACK_SYMBOL"
+#}
 
 # battery
 while true;
@@ -115,25 +115,25 @@ done > "$PANEL_FIFO" &
 while true;
 do
     ####### NON-SCROLLING VER #######
-    #CURRENT_TRACK=$(sh current_track.sh)
-    #echo "M $CURRENT_TRACK"
+    CURRENT_TRACK=$(sh current_track.sh)
+    echo "M $CURRENT_TRACK"
 
     ####### SCROLLING VERSION #######
-    CURRENT_TRACK=$(current_track)
-    if [ "$OLD_TRACK" != "$CURRENT_TRACK" ] || [ "$counter" -eq "0" ] || [ "${#CURRENT_TRACK}" -le "$MAXLEN" ];
-    then
-        counter=$[${#CURRENT_TRACK}-$MAXLEN]
-    else
-        counter=$[$counter-1]
-    fi
-    OLD_TRACK=$CURRENT_TRACK
-    # truncate tracks that are too long
-    if [ $counter -ge 0 ]
-    then
-        CURRENT_TRACK=${CURRENT_TRACK:$counter:$MAXLEN}
-    fi
-    TRACK_SYMBOL=$(current_track_symbol)
-    echo "M $CURRENT_TRACK $TRACK_SYMBOL"
+    #CURRENT_TRACK=$(current_track)
+    #if [ "$OLD_TRACK" != "$CURRENT_TRACK" ] || [ "$counter" -eq "0" ] || [ "${#CURRENT_TRACK}" -le "$MAXLEN" ];
+    #then
+        #counter=$[${#CURRENT_TRACK}-$MAXLEN]
+    #else
+        #counter=$[$counter-1]
+    #fi
+    #OLD_TRACK=$CURRENT_TRACK
+    ## truncate tracks that are too long
+    #if [ $counter -ge 0 ]
+    #then
+        #CURRENT_TRACK=${CURRENT_TRACK:$counter:$MAXLEN}
+    #fi
+    #TRACK_SYMBOL=$(current_track_symbol)
+    #echo "M $CURRENT_TRACK $TRACK_SYMBOL"
 sleep 1;
 done > "$PANEL_FIFO" &
 
