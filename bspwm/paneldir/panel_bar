@@ -65,7 +65,7 @@ while read -r line ; do
             fi
             #underline track name
             track=$(echo "$line" | sed "s/\ -\ \(.*\)\(..\)$/\ -\ %{F$track_color}%{U$under_color}%{+u}\1%{-u}%{U-}%{F$music_color}\2/")
-            track="%{A:mpc toggle:}%{A3:mpc next:}%{F$music_color}%{B$COLOR_SYS_BG}$PADDING${track#?} %{B-}%{F-}%{A}%{A}"
+            track="%{A:mpc toggle:}%{A3:mpc next:}%{F$music_color}%{B$COLOR_SYS_BG}${track#?} %{B-}%{F-}%{A}%{A}"
             ;;
         L*)
             # wifi link
@@ -77,11 +77,11 @@ while read -r line ; do
             then
                 WIFI_COLOR=$COLOR_WIFI_DISCONNECTED
             fi
-            wifi="%{F$WIFI_COLOR}%{B$COLOR_SYS_BG}%{A:sh toggle_wpa_gui.sh & disown:}$PADDING${line#?} %{A}%{B-}%{F-}"
+            wifi="%{F$WIFI_COLOR}%{B$COLOR_SYS_BG}%{A:sh toggle_wpa_gui.sh & disown:}${line#?} %{A}%{B-}%{F-}"
             ;;
         D*)
             # date output
-            date="%{F$COLOR_DATE}%{B$COLOR_SYS_BG}$PADDING${line#?} %{B-}%{F-}"
+            date="%{F$COLOR_DATE}%{B$COLOR_SYS_BG}${line#?} %{B-}%{F-}"
             ;;
 		S*)
 			# clock output
@@ -122,19 +122,19 @@ while read -r line ; do
 								# focused free desktop
 								FG=$COLOR_FREE_FG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}$PADDING%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}"
+                                wm="${wm}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}"
 								;;
 							O*)
 								# focused occupied desktop
 								FG=$COLOR_FOCUSED_OCCUPIED_FG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}$PADDING%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}"
+                                wm="${wm}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}"
 								;;
 							U*)
 								# focused urgent desktop
 								FG=$COLOR_URGENT_FG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}$PADDING%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}"
+                                wm="${wm}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}"
 								;;
 							f*)
 								# free desktop
@@ -153,45 +153,6 @@ while read -r line ; do
 								;;
 						esac
 						;;
-					#[fFoOuU]*)
-						#case $item in
-							#f*)
-								## free desktop
-								#FG=$COLOR_FREE_FG
-								#BG=$COLOR_FREE_BG
-								#;;
-							#F*)
-								## focused free desktop
-								#FG=$COLOR_FOCUSED_FREE_FG
-								#BG=$COLOR_FOCUSED_FREE_BG
-								#;;
-							#o*)
-								## occupied desktop
-								#FG=$COLOR_OCCUPIED_FG
-								#BG=$COLOR_OCCUPIED_BG
-								#;;
-							#O*)
-								## focused occupied desktop
-								#FG=$COLOR_FOCUSED_OCCUPIED_FG
-								#BG=$COLOR_FOCUSED_OCCUPIED_BG
-								#;;
-							#u*)
-								## urgent desktop
-								#FG=$COLOR_URGENT_FG
-								#BG=$COLOR_URGENT_BG
-								#;;
-							#U*)
-								## focused urgent desktop
-								#FG=$COLOR_FOCUSED_URGENT_FG
-								#BG=$COLOR_FOCUSED_URGENT_BG
-								#;;
-						#esac
-						#wm="${wm}%{F${FG}}%{B${BG}}%{A:bspc desktop -f ${name}:} ${name} %{A}%{B-}%{F-}"
-						#;;
-					#[LTG]*)
-						## layout, state and flags
-						#wm="${wm}%{F$COLOR_STATE_FG}%{B$COLOR_STATE_BG} ${name} %{B-}%{F-}"
-						#;;
 				esac
 				shift
 			done

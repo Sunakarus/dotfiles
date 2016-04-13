@@ -7,7 +7,6 @@ setxkbmap -layout cz -variant qwerty_bksl
 numlockx off; numlockx on;
 
 xset b off
-
 # set screen timeout
 xset s 3600 3600 -dpms
 
@@ -19,6 +18,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1 &
 wmname LG3D &
 dunst &
 
+#clipboard sync
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
@@ -42,9 +42,5 @@ bspc rule -a Gimp state=floating follow=on
 bspc rule -a Xdialog state=floating
 bspc rule -a pavucontrol state=floating
 bspc rule -a steam floating=on
-
-#bspc rule -a mplayer2 state=floating
-#bspc rule -a Kupfer.py focus=on
-#bspc rule -a Screenkey manage=off
 
 panel &
