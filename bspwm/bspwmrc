@@ -2,6 +2,10 @@
 
 # set keyboard layout
 setxkbmap -layout cz -variant qwerty_bksl
+
+# setxkbmap turns off numlock LED for some reason - turn numlock off and on to fix
+numlockx off; numlockx on;
+
 xset b off
 
 # set screen timeout

@@ -192,7 +192,7 @@ while read -r line ; do
 			done
 			;;
 	esac
-    power=" %{F$COLOR_POWER_BUTTON}%{B${BG}}%{A:sh shutdowndialog.sh & disown:} %{A}%{B-}%{F-} "
+    power="%{F$COLOR_POWER}%{B${BG}}%{A:sh shutdowndialog.sh & disown:}  %{A}%{B-}%{F-}"
 	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}| ${battery}${est_time}|${wifi}| ${volume}|${date}|${sys}|${power}"
 
 done
