@@ -1,12 +1,22 @@
 #! /bin/bash
-file="clone.sh"
-
-if [ -f $file ] ; 
+#pass -g flag to generate clone.sh
+GENERATE_CLONE=0
+if [ "$1" == "-g" ]
 then
-    rm $file
+    GENERATE_CLONE=1
 fi
-touch $file
-chmod +x $file
+
+if [ $GENERATE_CLONE == 1 ]
+then
+    file="clone.sh"
+
+    if [ -f $file ] ; 
+    then
+        rm $file
+    fi
+    touch $file
+    chmod +x $file
+fi
 
 total=$(ls -l | grep -c ^d)
 curr=1
@@ -17,7 +27,10 @@ for d in */ ; do
     if [[ ! -z $url ]] && [[ $url != *"Sunakarus/dotfiles"* ]]
     then
         echo "[$curr/$total] $url"
-        echo "git clone $url" >> ../$file
+        if [ $GENERATE_CLONE == 1 ]
+        then
+            echo "git clone $url" >> ../$file
+        fi
         git pull
     else
         echo "[$curr/$total] Not a git repository, skipping..."
@@ -25,3 +38,8 @@ for d in */ ; do
     curr=$[$curr+1]
     cd ..
 done
+
+if [ $GENERATE_CLONE == 1 ]
+then
+    echo "Clone file generated in ./$file"
+fi

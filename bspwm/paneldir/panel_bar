@@ -65,7 +65,7 @@ while read -r line ; do
             fi
             #underline track name
             track=$(echo "$line" | sed "s/\ -\ \(.*\)\(..\)$/\ -\ %{F$track_color}%{U$under_color}%{+u}\1%{-u}%{U-}%{F$music_color}\2/")
-            track="%{F$music_color}%{B$COLOR_SYS_BG}$PADDING${track#?} %{B-}%{F-}"
+            track="%{A:mpc toggle:}%{A3:mpc next:}%{F$music_color}%{B$COLOR_SYS_BG}$PADDING${track#?} %{B-}%{F-}%{A}%{A}"
             ;;
         L*)
             # wifi link
