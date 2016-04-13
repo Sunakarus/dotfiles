@@ -35,7 +35,7 @@ super + Home
     mpc toggle
 
 super + End
-    uxterm -e ncmpcpp -s playlist -S visualizer
+    uxterm -e ncmpcpp
 
 super + Prior
     mpc prev

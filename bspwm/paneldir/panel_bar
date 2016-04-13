@@ -23,7 +23,7 @@ while read -r line ; do
             then
                 BAT_COLOR=$COLOR_BATTERY_MID
             fi
-            battery="%{F$BAT_COLOR}%{B$COLOR_SYS_BG}$PADDING${line#?}%{B-}%{F-}"
+            battery="%{F$BAT_COLOR}%{B$COLOR_SYS_BG} ${line#?}%{B-}%{F-}"
             ;;
         E*)
             if [[ $line == *'+' ]] #charging
@@ -37,7 +37,12 @@ while read -r line ; do
             ;;
         V*)
             # alsa volume
-            volume="%{F$COLOR_VOLUME}%{B$COLOR_SYS_BG}%{A:sh volume.sh & disown:}$PADDING${line#?} %{A}%{B-}%{F-}"
+            volume=" ${line#?} "
+            volume="%{A4:amixer -q set Master 5%+:}$volume%{A}"
+            volume="%{A5:amixer -q set Master 5%-:}$volume%{A}"
+            volume="%{A:sh volume.sh & disown:}$volume%{A}"
+
+            volume="%{F$COLOR_VOLUME}%{B$COLOR_SYS_BG}$volume%{B-}%{F-}"
             ;;
         M*)
             # current track
@@ -193,6 +198,6 @@ while read -r line ; do
 			;;
 	esac
     power="%{F$COLOR_POWER}%{B${BG}}%{A:sh shutdowndialog.sh & disown:}  %{A}%{B-}%{F-}"
-	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}| ${battery}${est_time}|${wifi}| ${volume}|${date}|${sys}|${power}"
+	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}|${battery}${est_time}|${wifi}|${volume}|${date}|${sys}|${power}"
 
 done
