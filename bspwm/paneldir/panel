@@ -104,9 +104,9 @@ then
     echo "E"
 elif [[ $(battery) == "Discharging"* ]]
 then
-    echo "E  $ESTIMATED_TIME-"
+    echo "E$ESTIMATED_TIME-"
 else
-    echo "E  $ESTIMATED_TIME+"
+    echo "E$ESTIMATED_TIME+"
 fi
 sleep 5;
 done > "$PANEL_FIFO" &

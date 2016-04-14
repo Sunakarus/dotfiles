@@ -8,7 +8,7 @@ xterm*locale: true
 !URxvt.url-select.underline: true
 
 *.foreground: #D7D0C7
-*.background:   #262626
+*.background: #262626
 
 !black
 *color0:     #101010
