@@ -61,7 +61,7 @@ super + Escape
 
 # quit bspwm normally
 super + alt + Escape
-	mpc pause; bspc quit
+	mpc pause; killall panel; bspc quit
 
 # close and kill
 super + {_,shift + }w

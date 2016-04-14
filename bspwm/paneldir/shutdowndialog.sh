@@ -17,7 +17,7 @@ then
     rm -f /tmp/exitval.$$
 
     case $ACTION in
-        'Log out') mpc pause; bspc quit ;;
+        'Log out') mpc pause; killall panel; bspc quit ;;
         'Shutdown') shutdown now ;;
         'Reboot') reboot ;;
         *) exit ;;
