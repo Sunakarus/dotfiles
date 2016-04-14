@@ -62,52 +62,52 @@ clock -sf 'S%H:%M' > "$PANEL_FIFO" &
 # battery
 while true;
 do
-#BAT_LEVEL_1=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep "percentage" | sed 's/\s//g' | cut -d: -f2 | sed 's/%//')
-BAT_LEVEL_1=$(battery | cut -d' ' -f2)
+    #BAT_LEVEL=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep "percentage" | sed 's/\s//g' | cut -d: -f2 | sed 's/%//')
+    BAT_LEVEL=$(battery | cut -d' ' -f2)
 
-SYMBOL="" # full battery
-if [ $BAT_LEVEL_1 -le 100 ] && [ $BAT_LEVEL_1 -ge 90 ];
-then
     SYMBOL="" # full battery
-elif [ $BAT_LEVEL_1 -lt 90 ] && [ $BAT_LEVEL_1 -ge 75 ];
-then
-    SYMBOL="" # 3/4
-elif [ $BAT_LEVEL_1 -lt 75 ] && [ $BAT_LEVEL_1 -ge 40 ];
-then
-    SYMBOL="" # 2/4
-elif [ $BAT_LEVEL_1 -lt 40 ] && [ $BAT_LEVEL_1 -ge 10 ];
-then
-    SYMBOL="" # 1/4
-else
-    SYMBOL="" # empty 
-fi
+    if [ "$BAT_LEVEL" -le 100 ] && [ "$BAT_LEVEL" -ge 90 ];
+    then
+        SYMBOL="" # full battery
+    elif [ "$BAT_LEVEL" -lt 90 ] && [ "$BAT_LEVEL" -ge 75 ];
+    then
+        SYMBOL="" # 3/4
+    elif [ "$BAT_LEVEL" -lt 75 ] && [ "$BAT_LEVEL" -ge 40 ];
+    then
+        SYMBOL="" # 2/4
+    elif [ "$BAT_LEVEL" -lt 40 ] && [ "$BAT_LEVEL" -ge 10 ];
+    then
+        SYMBOL="" # 1/4
+    else
+        SYMBOL="" # empty 
+    fi
 
-if [ $BAT_LEVEL_1 == 100 ];
-then
-    echo "B$SYMBOL $BAT_LEVEL_1%"
-elif [[ $(battery) == "Charging"* ]]
-then
-    echo "B $SYMBOL $BAT_LEVEL_1%"
-else
-    echo "B$SYMBOL $BAT_LEVEL_1%"
-fi
+    if [ "$BAT_LEVEL" == 100 ];
+    then
+        echo "B$SYMBOL $BAT_LEVEL%"
+    elif [[ $(battery) == "Charging"* ]]
+    then
+        echo "B $SYMBOL $BAT_LEVEL%"
+    else
+        echo "B$SYMBOL $BAT_LEVEL%"
+    fi
 sleep 1;
 done > "$PANEL_FIFO" &
 
 #estimated time
 while true;
 do
-BAT_LEVEL_1=$(battery | cut -d' ' -f2)
-ESTIMATED_TIME=$(acpi | cut -d' ' -f5 | cut -d':' -f1-2)
-if [ $BAT_LEVEL_1 == 100 ] || [[ ! $ESTIMATED_TIME == *":"* ]];
-then
-    echo "E"
-elif [[ $(battery) == "Discharging"* ]]
-then
-    echo "E$ESTIMATED_TIME-"
-else
-    echo "E$ESTIMATED_TIME+"
-fi
+    BAT_LEVEL=$(battery | cut -d' ' -f2)
+    ESTIMATED_TIME=$(acpi | cut -d' ' -f5 | cut -d':' -f1-2)
+    if [ "$BAT_LEVEL" == 100 ] || [[ ! $ESTIMATED_TIME == *":"* ]];
+    then
+        echo "E"
+    elif [[ $(battery) == "Discharging"* ]]
+    then
+        echo "E$ESTIMATED_TIME-"
+    else
+        echo "E$ESTIMATED_TIME+"
+    fi
 sleep 5;
 done > "$PANEL_FIFO" &
 
@@ -141,41 +141,41 @@ done > "$PANEL_FIFO" &
 # alsa volume
 while true;
 do
-ALSA_VOLUME=$(amixer -c 1 get Master | grep 'Mono: Playback' | grep -o '...%' | sed 's/\[//' | sed 's/%//' | sed 's/ //')
-ALSA_STATE=$(amixer -c 1 get Master | grep 'Mono: Playback' | grep -o '\[on]')
+    ALSA_VOLUME=$(amixer -c 1 get Master | grep 'Mono: Playback' | grep -o '...%' | sed 's/\[//' | sed 's/%//' | sed 's/ //')
+    ALSA_STATE=$(amixer -c 1 get Master | grep 'Mono: Playback' | grep -o '\[on]')
 
-if [ $ALSA_STATE ]
-then
-    if [ $ALSA_VOLUME -ge 40 ]
+    if [ "$ALSA_STATE" ]
     then
-        echo V' '$ALSA_VOLUME"%" #volUp
+        if [ "$ALSA_VOLUME" -ge 40 ]
+        then
+            echo "V $ALSA_VOLUME%" #volUp
+        else
+            echo "V $ALSA_VOLUME%" #volDown
+        fi
     else
-        echo V' '$ALSA_VOLUME"%" #volDown
+        echo "V mute"
     fi
-else
-    echo V' mute'
-fi
-sleep 0.1
+sleep 0.2
 done > $PANEL_FIFO &
 
 
 # wifi
 while true;
 do
-WIFI_SSID=$(iw wlp9s0 link | grep 'SSID' | sed 's/SSID: //' | sed 's/\t//')
-#WIFI_SIGNAL=$(iw wlp9s0 link | grep 'signal' | sed 's/signal: //' | sed 's/ dBm//' | sed 's/\t//')
-#WIFI_SIGNAL=$(cat /proc/net/wireless | awk 'NR==3 { print $3}' | sed 's/\.//')
-WIFI_IP=$(ifconfig wlp9s0 | grep "inet " | cut -d' ' -f10)
-  if [ -z "$WIFI_SSID" ];
-  then
-    echo "L  Disconnected "
-  elif [ ! -z "$WIFI_IP" ];
-  then
-    echo "L  $WIFI_SSID " #connected
-  else
-    echo L' ' $WIFI_SSID
-  fi
-  sleep 1
+    WIFI_SSID=$(iw wlp9s0 link | grep 'SSID' | sed 's/SSID: //' | sed 's/\t//')
+    #WIFI_SIGNAL=$(iw wlp9s0 link | grep 'signal' | sed 's/signal: //' | sed 's/ dBm//' | sed 's/\t//')
+    #WIFI_SIGNAL=$(cat /proc/net/wireless | awk 'NR==3 { print $3}' | sed 's/\.//')
+    WIFI_IP=$(ifconfig wlp9s0 | grep "inet " | cut -d' ' -f10)
+    if [ -z "$WIFI_SSID" ];
+    then
+        echo "L  Disconnected "
+    elif [ ! -z "$WIFI_IP" ];
+    then
+        echo "L  $WIFI_SSID " #connected
+    else
+        echo "L  $WIFI_SSID"
+    fi
+sleep 1
 done > $PANEL_FIFO &
 
 # date

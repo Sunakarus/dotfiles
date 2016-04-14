@@ -10,8 +10,9 @@ while read -r line ; do
 	case $line in
         B*)
             # battery percent output
+
             BAT_COLOR=$COLOR_BATTERY_HIGH
-            batNum=$(echo $line | egrep -o "([0-9]+)" | cut -d' ' -f2)
+            batNum=$(echo "$line" | egrep -o "([0-9]+)" | cut -d' ' -f2)
 
             if [ "$batNum" -ge "0" ] && [ "$batNum" -le "10" ];
             then
@@ -26,19 +27,27 @@ while read -r line ; do
             battery="%{F$BAT_COLOR}%{B$COLOR_SYS_BG} ${line#?}%{B-}%{F-}"
             ;;
         E*)
-            symbol="»"
+            # estimated time left on battery/to charge until full
+
+            symbol=" »"
+            padding=" "
             if [[ $line == *'+' ]] #charging
             then
                 est_time_color=$COLOR_TITLE_FG
             elif [[ $line == *'-' ]] #discharging
             then
                 est_time_color=$BAT_COLOR
+            else
+                symbol=""
+                padding=""
             fi
-            est_time="%{B$COLOR_SYS_BG} $symbol%{F$est_time_color} ${line#?} %{B-}%{F-}"
+            est_time="%{B$COLOR_SYS_BG}$symbol%{F$est_time_color}$padding${line#?} %{B-}%{F-}"
             ;;
         V*)
-            # alsa volume
+            # volume
+
             volume=" ${line#?} "
+            # mouse controls
             volume="%{A4:amixer -q set Master 5%+:}$volume%{A}"
             volume="%{A5:amixer -q set Master 5%-:}$volume%{A}"
             volume="%{A:sh volume.sh & disown:}$volume%{A}"
@@ -47,12 +56,13 @@ while read -r line ; do
             ;;
         M*)
             # current track
+
             music_color=$COLOR_MUSIC_PLAYING
             track_color=$COLOR_MUSIC_PLAYING_TRACK
             under_color=$COLOR_MUSIC_PLAYING
             if [[ $line == *"MPD off" ]]
             then
-                music_color=$COLOR_WIFI_DISCONNECTED
+                music_color=$COLOR_MPD_OFF
             elif [[ $line == *''* ]] #paused
             then
                 music_color=$COLOR_MUSIC_PAUSED
@@ -64,12 +74,18 @@ while read -r line ; do
                 track_color=$COLOR_SPOTIFY_TRACK
                 under_color=$COLOR_SPOTIFY
             fi
-            #underline track name
+            # underline/highlight track name
             track=$(echo "$line" | sed "s/\ -\ \(.*\)\(..\)$/\ -\ %{F$track_color}%{U$under_color}%{+u}\1%{-u}%{U-}%{F$music_color}\2/")
-            track="%{A:mpc toggle:}%{A3:mpc next:}%{F$music_color}%{B$COLOR_SYS_BG}${track#?} %{B-}%{F-}%{A}%{A}"
+            track="%{F$music_color}%{B$COLOR_SYS_BG}${track#?} %{B-}%{F-}"
+
+            # mouse controls
+            track="%{A:mpc toggle:}$track%{A}"
+            track="%{A2:uxterm -e ncmpcpp:}$track%{A}"
+            track="%{A3:mpc next:}$track%{A}"
             ;;
         L*)
-            # wifi link
+            # wifi
+
             WIFI_COLOR=$COLOR_WIFI_CONNECTING
             if [[ $line == *""* ]]
             then
@@ -82,14 +98,17 @@ while read -r line ; do
             ;;
         D*)
             # date output
+
             date="%{F$COLOR_DATE}%{B$COLOR_SYS_BG}${line#?} %{B-}%{F-}"
             ;;
 		S*)
 			# clock output
+
 			sys="%{F$COLOR_TIME}%{B$COLOR_SYS_BG} ${line#?} %{B-}%{F-}"
 			;;
 		T*)
 			# xtitle output
+
             title="%{F$COLOR_TITLE_FG}%{B$COLOR_SYS_BG} ${line#?} %{B-}%{F-}"
 			;;
 		W*)
@@ -125,21 +144,21 @@ while read -r line ; do
 								FG=$COLOR_FREE_FG
                                 BG=$COLOR_FOCUSED_BG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{B${BG}}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
+                                wm="${wm}%{B${BG}}%{F${FG}}%{U$UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
 								;;
 							O*)
 								# focused occupied desktop
 								FG=$COLOR_FOCUSED_OCCUPIED_FG
                                 BG=$COLOR_FOCUSED_BG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{B${BG}}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
+                                wm="${wm}%{B${BG}}%{F${FG}}%{U$UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
 								;;
 							U*)
 								# focused urgent desktop
 								FG=$COLOR_URGENT_FG
                                 BG=$COLOR_FOCUSED_BG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{B${BG}}%{F${FG}}%{U$COLOR_UNDERLINE}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
+                                wm="${wm}%{B${BG}}%{F${FG}}%{U$UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
 								;;
 							f*)
 								# free desktop
