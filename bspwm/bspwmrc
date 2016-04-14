@@ -36,7 +36,8 @@ bspc config gapless_monocle      true
 bspc config focus_by_distance    true
 bspc config history_aware_focus  true
 
-bspc monitor -d I II III IV V VI
+#bspc monitor -d I II III IV V VI
+bspc monitor -d 1 2 3 4 5 6
 
 bspc rule -a Gimp state=floating follow=on
 bspc rule -a Xdialog state=floating
