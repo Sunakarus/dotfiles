@@ -46,45 +46,6 @@ function truncate_str {
     fi
     echo "$track"
 }
-#MAXLEN=60
-#function current_track {
-    #if [ $(pgrep -xo spotify) ]
-    #then
-        #track=$(python2 ./.config/bspwm/paneldir/spotify.py)
-    #fi
-
-    #if [[ -z $track ]]
-    #then
-        #if [ $(pgrep -x mpd) ]
-        #then
-            #track=$(mpc current)
-            #if [[ -z $track ]]
-            #then
-                #echo ""
-            #fi
-        #else
-            #echo "MPD off"
-        #fi
-    #fi
-
-    #if [ ${#track} -ge 1 ]
-    #then
-        #echo "$track"
-    #fi
-#}
-
-#function current_track_symbol {
-    #if [[ -n $(mpc status | grep paused) ]]
-    #then
-        #TRACK_SYMBOL="" #paused
-    #elif [[ -n $(mpc status | grep playing) ]]
-    #then
-        #TRACK_SYMBOL="" #playing
-    #else
-        #TRACK_SYMBOL="" #spotify
-    #fi
-    #echo "$TRACK_SYMBOL"
-#}
 
 # battery
 while true;
@@ -112,6 +73,7 @@ do
     if [ "$BAT_LEVEL" == 100 ];
     then
         echo "B$SYMBOL $BAT_LEVEL%"
+        sleep 5;
     elif [[ $(battery) == "Charging"* ]]
     then
         echo "B $SYMBOL $BAT_LEVEL%"
@@ -149,7 +111,6 @@ done > "$PANEL_FIFO" &
         #echo "M$CURRENT_TRACK"
     #fi
     #spotflag=0
-
     #if [ $(pgrep -xo spotify) ]
     #then
         #spotflag=1
@@ -168,7 +129,6 @@ done > "$PANEL_FIFO" &
 # current mpd track
 while true;
 do
-    ####### NON-SCROLLING VER #######
     if [ -z $(pgrep -x mpd) ]
     then
         echo "MMPD off"
@@ -179,26 +139,7 @@ do
         echo "M$CURRENT_TRACK"
         mpc idle;
     fi
-
-    ####### SCROLLING VERSION #######
-    #CURRENT_TRACK=$(current_track)
-    #if [ "$OLD_TRACK" != "$CURRENT_TRACK" ] || [ "$counter" -eq "0" ] || [ "${#CURRENT_TRACK}" -le "$MAXLEN" ];
-    #then
-        #counter=$[${#CURRENT_TRACK}-$MAXLEN]
-    #else
-        #counter=$[$counter-1]
-    #fi
-    #OLD_TRACK=$CURRENT_TRACK
-    ## truncate tracks that are too long
-    #if [ $counter -ge 0 ]
-    #then
-        #CURRENT_TRACK=${CURRENT_TRACK:$counter:$MAXLEN}
-    #fi
-    #TRACK_SYMBOL=$(current_track_symbol)
-    #echo "M $CURRENT_TRACK $TRACK_SYMBOL"
-#sleep 1;
 done > "$PANEL_FIFO" &
-
 
 # alsa volume
 while true;
@@ -211,7 +152,6 @@ do
         sleep 5
     fi
 done > $PANEL_FIFO &
-
 
 # wifi
 while true;
