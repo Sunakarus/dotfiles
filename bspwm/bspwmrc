@@ -1,29 +1,4 @@
 #! /bin/sh
-
-# set keyboard layout
-setxkbmap -layout cz -variant qwerty_bksl
-
-# setxkbmap turns off numlock LED for some reason - turn numlock off and on to fix
-numlockx off; numlockx on;
-
-xset b off
-# set screen timeout
-xset s 3600 3600 -dpms
-
-light-locker &
-mpd &
-sh ~/.fehbg &
-compton --conf ~/.config/compton.conf &
-export _JAVA_AWT_WM_NONREPARENTING=1 &
-wmname LG3D &
-dunst &
-
-#clipboard sync
-autocutsel -fork &
-autocutsel -selection PRIMARY -fork &
-
-sxhkd &
-
 bspc config border_width         2
 bspc config active_border_color  "#7FD4F0"
 bspc config focused_border_color "#7FD4F0"
