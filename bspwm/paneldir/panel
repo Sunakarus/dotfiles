@@ -1,13 +1,22 @@
 #! /bin/sh
 
-#PANEL_FONT_FAMILY="DejaVuSansMono:size=8"
 PANEL_FONT_FAMILY="TerminessPowerline:size=8"
 ICON_FONT="FontAwesome:size=10"
 
-if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
-	printf "%s\n" "The panel is already running." >&2
-	exit 1
-fi
+#if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
+	#printf "%s\n" "The panel is already running." >&2
+	#exit 1
+#fi
+
+# Kill any panel processes older than us, instead of bailing like the example
+# does. That caused one too many panel-less boots for me.
+ 
+while [ $(pgrep -cx panel) -gt 1 ] ; do
+    pkill -ox -9 panel
+done
+     
+# Kill any remaining trays / xtitle instances so we don't have multiples.
+killall -9 xtitle
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
@@ -16,9 +25,25 @@ mkfifo "$PANEL_FIFO"
 
 bspc config top_padding $PANEL_HEIGHT
 bspc subscribe report > "$PANEL_FIFO" &
+
+# title
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
+
+# clock
 clock -sf 'S%H:%M' > "$PANEL_FIFO" &
 
+# truncate strings that are too long
+function truncate_str {
+    maxlen=60
+    track="$1"
+
+    if [ "${#track}" -ge $maxlen ]
+    then
+        track="${track:${#track}-$maxlen:$maxlen}"
+        track="...$track"
+    fi
+    echo "$track"
+}
 #MAXLEN=60
 #function current_track {
     #if [ $(pgrep -xo spotify) ]
@@ -111,12 +136,47 @@ do
 sleep 5;
 done > "$PANEL_FIFO" &
 
-# current track
+##spotify
+##UNTESTED - because spotify keeps segfaulting on startup
+#while true;
+#do
+    ## for when spotify is turned off
+    #oldspotflag=$spotflag
+    #if [ "$oldspotflag" != "$spotflag" ]
+    #then
+        #echo "M$CURRENT_TRACK"
+    #fi
+    #spotflag=0
+
+    #if [ $(pgrep -xo spotify) ]
+    #then
+        #spotflag=1
+        #SPOTIFY_TRACK=$(python2 spotify.py)
+        #SPOTIFY_TRACK=$(truncate_str $SPOTIFY_TRACK)
+        #if [[ ! -z $SPOTIFY_TRACK ]]
+        #then
+            #echo "M$SPOTIFY_TRACK "
+        #else
+            #echo "- "
+        #fi
+    #fi
+    #sleep 1;
+#done > "$PANEL_FIFO" &
+
+# current mpd track
 while true;
 do
     ####### NON-SCROLLING VER #######
-    CURRENT_TRACK=$(sh current_track.sh)
-    echo "M $CURRENT_TRACK"
+    if [ -z $(pgrep -x mpd) ]
+    then
+        echo "MMPD off"
+        sleep 5;
+    else
+        CURRENT_TRACK=$(sh current_track.sh)
+        CURRENT_TRACK=$(truncate_str "$CURRENT_TRACK")
+        echo "M$CURRENT_TRACK"
+        mpc idle;
+    fi
 
     ####### SCROLLING VERSION #######
     #CURRENT_TRACK=$(current_track)
@@ -134,7 +194,7 @@ do
     #fi
     #TRACK_SYMBOL=$(current_track_symbol)
     #echo "M $CURRENT_TRACK $TRACK_SYMBOL"
-sleep 1;
+#sleep 1;
 done > "$PANEL_FIFO" &
 
 
