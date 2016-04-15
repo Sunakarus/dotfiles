@@ -48,8 +48,8 @@ while read -r line ; do
 
             volume=" ${line#?} "
             # mouse controls
-            volume="%{A4:amixer -q set Master 5%+:}$volume%{A}"
-            volume="%{A5:amixer -q set Master 5%-:}$volume%{A}"
+            volume="%{A4:sh update_volume.sh up:}$volume%{A}"
+            volume="%{A5:sh update_volume.sh down:}$volume%{A}"
             volume="%{A:sh volume.sh & disown:}$volume%{A}"
 
             volume="%{F$COLOR_VOLUME}%{B$COLOR_SYS_BG}$volume%{B-}%{F-}"

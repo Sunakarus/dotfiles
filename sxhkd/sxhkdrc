@@ -8,13 +8,16 @@ XF86MonBrightnessDown
     xbacklight -dec 10;./dotfiles/sxhkd/brightness
 
 XF86AudioLowerVolume
-    amixer -q sset Master 3%-
+    ./dotfiles/bspwm/paneldir/update_volume.sh down
+    #amixer -q sset Master 3%-
 
 XF86AudioRaiseVolume
-    amixer -q sset Master 3%+
+    ./dotfiles/bspwm/paneldir/update_volume.sh up
+    #amixer -q sset Master 3%+
 
 XF86AudioMute
-    amixer set Master toggle
+    ./dotfiles/bspwm/paneldir/update_volume.sh toggle
+    #amixer set Master toggle
 
 Print
     scrot -e 'mv $f ~/screenshots/'

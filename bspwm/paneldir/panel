@@ -26,6 +26,8 @@ mkfifo "$PANEL_FIFO"
 bspc config top_padding $PANEL_HEIGHT
 bspc subscribe report > "$PANEL_FIFO" &
 
+sh update_volume.sh & #initial volume set
+
 # title
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
 
@@ -201,21 +203,13 @@ done > "$PANEL_FIFO" &
 # alsa volume
 while true;
 do
-    ALSA_VOLUME=$(amixer -c 1 get Master | grep 'Mono: Playback' | grep -o '...%' | sed 's/\[//' | sed 's/%//' | sed 's/ //')
-    ALSA_STATE=$(amixer -c 1 get Master | grep 'Mono: Playback' | grep -o '\[on]')
-
-    if [ "$ALSA_STATE" ]
+    if [ $(pgrep -x pavucontrol) ]
     then
-        if [ "$ALSA_VOLUME" -ge 40 ]
-        then
-            echo "V $ALSA_VOLUME%" #volUp
-        else
-            echo "V $ALSA_VOLUME%" #volDown
-        fi
+        sh update_volume.sh
+        sleep 0.2
     else
-        echo "V mute"
+        sleep 5
     fi
-sleep 0.2
 done > $PANEL_FIFO &
 
 
