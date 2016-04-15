@@ -206,7 +206,7 @@ do
     if [ $(pgrep -x pavucontrol) ]
     then
         sh update_volume.sh
-        sleep 0.2
+        sleep 0.1
     else
         sleep 5
     fi
