@@ -31,12 +31,13 @@ while read -r line ; do
 
             symbol=" »"
             padding=" "
+            est_time_color=$COLOR_URGENT_FG
             if [[ $line == *'+' ]] #charging
             then
-                est_time_color=$COLOR_TITLE_FG
+                est_time_color=$COLOR_FOCUSED_OCCUPIED_FG
             elif [[ $line == *'-' ]] #discharging
             then
-                est_time_color=$BAT_COLOR
+                est_time_color=$COLOR_OCCUPIED_FG
             else
                 symbol=""
                 padding=""
@@ -144,21 +145,21 @@ while read -r line ; do
 								FG=$COLOR_FREE_FG
                                 BG=$COLOR_FOCUSED_BG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{B${BG}}%{F${FG}}%{U$UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
+                                wm="${wm}%{B${BG}}%{F${FG}}%{U${UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
 								;;
 							O*)
 								# focused occupied desktop
 								FG=$COLOR_FOCUSED_OCCUPIED_FG
                                 BG=$COLOR_FOCUSED_BG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{B${BG}}%{F${FG}}%{U$UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
+                                wm="${wm}%{B${BG}}%{F${FG}}%{U${UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
 								;;
 							U*)
 								# focused urgent desktop
 								FG=$COLOR_URGENT_FG
                                 BG=$COLOR_FOCUSED_BG
                                 UG=$COLOR_UNDERLINE
-                                wm="${wm}%{B${BG}}%{F${FG}}%{U$UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
+                                wm="${wm}%{B${BG}}%{F${FG}}%{U${UG}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{-u}%{U-}%{F-}%{B-}"
 								;;
 							f*)
 								# free desktop
@@ -182,7 +183,7 @@ while read -r line ; do
 			done
 			;;
 	esac
-    power="%{F$COLOR_POWER}%{B${BG}}%{A:sh shutdowndialog.sh & disown:}  %{A}%{B-}%{F-}"
+    power="%{F$COLOR_POWER}%{B${COLOR_SYS_BG}}%{A:sh shutdowndialog.sh & disown:}  %{A}%{B-}%{F-}"
 	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}|${battery}${est_time}|${wifi}|${volume}|${date}|${sys}|${power}"
 
 done
