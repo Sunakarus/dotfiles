@@ -54,7 +54,7 @@ while read -r line ; do
                 pac=$(echo "$pac" | sed "s//%{F$COLOR_OCCUPIED_FG}%{F$pac_color}/")
             elif [[ "$pac" == *''* ]] #full star
             then
-                pac=$(echo "$pac" | sed "s//%{F$COLOR_URGENT_FG}%{F$pac_color}/")
+                pac=$(echo "$pac" | sed "s//%{F$COLOR_URGENT_FG}%{F$pac_color}/")
             fi
             pac="%{F$pac_color}%{B$COLOR_SYS_BG}$pac%{B-}%{F-}"
             ;;

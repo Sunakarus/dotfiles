@@ -93,7 +93,7 @@ do
     else
         echo "P  $pac " #empty star 
     fi
-sleep 60;
+sleep 10;
 done > "$PANEL_FIFO" &
 
 #estimated time
