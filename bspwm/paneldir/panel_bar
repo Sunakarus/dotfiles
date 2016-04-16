@@ -6,6 +6,8 @@
 
 num_mon=$(bspc query -M | wc -l)
 
+pac="  - " #initialization
+
 while read -r line ; do
 	case $line in
         B*)
@@ -43,6 +45,18 @@ while read -r line ; do
                 padding=""
             fi
             est_time="%{B$COLOR_SYS_BG}$symbol%{F$est_time_color}$padding${line#?} %{B-}%{F-}"
+            ;;
+        P*)
+            pac=${line#?}
+            pac_color=$COLOR_FOCUSED_OCCUPIED_FG
+            if [[ "$pac" == *''* ]] #empty star
+            then
+                pac=$(echo "$pac" | sed "s//%{F$COLOR_OCCUPIED_FG}%{F$pac_color}/")
+            elif [[ "$pac" == *''* ]] #full star
+            then
+                pac=$(echo "$pac" | sed "s//%{F$COLOR_URGENT_FG}%{F$pac_color}/")
+            fi
+            pac="%{F$pac_color}%{B$COLOR_SYS_BG}$pac%{B-}%{F-}"
             ;;
         V*)
             # volume
@@ -184,6 +198,6 @@ while read -r line ; do
 			;;
 	esac
     power="%{F$COLOR_POWER}%{B${COLOR_SYS_BG}}%{A:sh shutdowndialog.sh & disown:}  %{A}%{B-}%{F-}"
-	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}|${battery}${est_time}|${wifi}|${volume}|${date}|${sys}|${power}"
+	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}|${battery}${est_time}|${wifi}|${volume}|${date}|${sys}|${pac}|${power}"
 
 done

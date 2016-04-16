@@ -83,6 +83,19 @@ do
 sleep 1;
 done > "$PANEL_FIFO" &
 
+# pacman packages that can be upgraded
+while true;
+do
+    pac=$(checkupdates | wc -l)
+    if [ "$pac" -ge 1 ]
+    then
+        echo "P%{A:uxterm -hold -e yaourt -Syua --devel:}  $pac %{A}" #full star 
+    else
+        echo "P  $pac " #empty star 
+    fi
+sleep 60;
+done > "$PANEL_FIFO" &
+
 #estimated time
 while true;
 do
@@ -175,7 +188,7 @@ done > $PANEL_FIFO &
 # date
 while true;
   do 
-      echo "D $(LC_ALL=en_US.UTF-8 date +'%A %d.%m.%Y')"
+      echo "D $(LC_ALL=en_US.UTF-8 date +'%a %d.%m.%Y')"
   sleep 10
 done > $PANEL_FIFO &
 
