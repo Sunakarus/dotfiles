@@ -2,10 +2,12 @@
 # wm independent hotkeys
 #
 XF86MonBrightnessUp
-    xbacklight -inc 10;./dotfiles/sxhkd/brightness
+    ./dotfiles/bspwm/paneldir/set_brightness.sh up
+    #xbacklight -inc 10;./dotfiles/sxhkd/brightness
 
 XF86MonBrightnessDown
-    xbacklight -dec 10;./dotfiles/sxhkd/brightness
+    ./dotfiles/bspwm/paneldir/set_brightness.sh down
+    #xbacklight -dec 10;./dotfiles/sxhkd/brightness
 
 XF86AudioLowerVolume
     ./dotfiles/bspwm/paneldir/update_volume.sh down
