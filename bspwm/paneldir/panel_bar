@@ -95,8 +95,10 @@ while read -r line ; do
 
             # mouse controls
             track="%{A:mpc toggle:}$track%{A}"
-            track="%{A2:uxterm -e ncmpcpp:}$track%{A}"
+            track="%{A2:uxterm -e ncmpcpp & disown:}$track%{A}"
             track="%{A3:mpc next:}$track%{A}"
+            track="%{A4:mpc volume +5:}$track%{A}"
+            track="%{A5:mpc volume -5:}$track%{A}"
             ;;
         L*)
             # wifi
