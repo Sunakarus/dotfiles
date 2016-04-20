@@ -49,4 +49,4 @@ fi
 
 msg="TBrightness: $bl $msg"
 
-echo "$msg" >> $PANEL_FIFO
+echo "$msg" > $PANEL_FIFO

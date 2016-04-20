@@ -68,6 +68,9 @@ super + Escape
 super + alt + Escape
 	mpc pause; killall panel; bspc quit
 
+ctrl + alt + Delete
+    ./dotfiles/bspwm/paneldir/shutdowndialog.sh
+
 # close and kill
 super + {_,shift + }w
 	bspc node -{c,k}

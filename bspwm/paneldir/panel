@@ -89,7 +89,7 @@ do
     pac=$(checkupdates | wc -l)
     if [ "$pac" -ge 1 ]
     then
-        echo "P%{A:uxterm -hold -e yaourt -Syua --devel & disown:}  $pac %{A}" #full star 
+        echo "P%{A:uxterm -hold -e yaourt -Syua & disown:}  $pac %{A}" #full star 
     else
         echo "P  $pac " #empty star 
     fi
