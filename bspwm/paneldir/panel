@@ -2,6 +2,7 @@
 
 PANEL_FONT_FAMILY="TerminessPowerline:size=8"
 ICON_FONT="FontAwesome:size=10"
+ICON_FONT2="Siji:size=8"
 
 #if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
 	#printf "%s\n" "The panel is already running." >&2
@@ -170,17 +171,27 @@ done > $PANEL_FIFO &
 while true;
 do
     WIFI_SSID=$(iw wlp9s0 link | grep 'SSID' | sed 's/SSID: //' | sed 's/\t//')
-    #WIFI_SIGNAL=$(iw wlp9s0 link | grep 'signal' | sed 's/signal: //' | sed 's/ dBm//' | sed 's/\t//')
-    #WIFI_SIGNAL=$(cat /proc/net/wireless | awk 'NR==3 { print $3}' | sed 's/\.//')
     WIFI_IP=$(ifconfig wlp9s0 | grep "inet " | cut -d' ' -f10)
+    WIFI_SYMBOL=""
     if [ -z "$WIFI_SSID" ];
     then
-        echo "L  Disconnected "
+        echo "LD Disconnected"
     elif [ ! -z "$WIFI_IP" ];
     then
-        echo "L  $WIFI_SSID " #connected
+        WIFI_SIGNAL=$(cat /proc/net/wireless | awk 'NR==3 { print $3}' | sed 's/\.//')
+        if [ "$WIFI_SIGNAL" -gt 64 ]
+        then
+            WIFI_SYMBOL="" #wifi high
+        elif [ "$WIFI_SIGNAL" -lt 65 ] && [ "$WIFI_SIGNAL" -gt 39 ]
+        then
+            WIFI_SYMBOL="" #wifi mid
+        elif [ "$WIFI_SIGNAL" -lt 40 ]
+        then
+            WIFI_SYMBOL="" #wifi low
+        fi
+        echo "LA $WIFI_SYMBOL $WIFI_SSID" #connected 
     else
-        echo "L  $WIFI_SSID"
+        echo "LC $WIFI_SSID"
     fi
 sleep 1
 done > $PANEL_FIFO &
@@ -196,7 +207,7 @@ done > $PANEL_FIFO &
 
 UNDERLINE_THICKNESS=1
 
-panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "$COLOR_UNDERLINE" -u $UNDERLINE_THICKNESS | sh &
+panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT" -f "$ICON_FONT2" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "$COLOR_UNDERLINE" -u $UNDERLINE_THICKNESS | sh &
 
 wid=$(xdo id -a "$PANEL_WM_NAME")
 tries_left=20

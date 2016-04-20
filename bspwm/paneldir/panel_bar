@@ -105,10 +105,11 @@ while read -r line ; do
             # wifi
 
             WIFI_COLOR=$COLOR_WIFI_CONNECTING
-            if [[ $line == *""* ]]
+            line=${line#?}
+            if [[ $line == "A"* ]]
             then
                 WIFI_COLOR=$COLOR_WIFI_CONNECTED
-            elif [[ $line == *""* ]]
+            elif [[ $line == "D"* ]]
             then
                 WIFI_COLOR=$COLOR_WIFI_DISCONNECTED
             fi

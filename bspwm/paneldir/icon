@@ -1,11 +1,11 @@
-3/4 
-1/4 
-2/4 
-empty 
-mute
-voldown
-volup
-calendar
+ 1/4 
+ 2/4 
+ 3/4 
+ empty 
+ mute
+ voldown
+ volup
+ calendar
  check
  cross
  plug
@@ -15,5 +15,15 @@ calendar
  pause
  pause_circle
  logout
-empty star 
-full star 
+ empty star 
+ full star 
+
+#horizontal
+ wifilow
+ wifimid
+ wifihigh
+
+#vertical
+ wifilow
+ wifimid
+ wifihigh
