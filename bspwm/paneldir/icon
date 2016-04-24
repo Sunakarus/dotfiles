@@ -28,6 +28,11 @@
  wifimid
  wifihigh
 
+#taller
+ wifi_low
+ wifi_mid
+ wifi_high
+
  pacman
  pacman_empty
  arrowup

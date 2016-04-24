@@ -181,15 +181,15 @@ do
         WIFI_SIGNAL=$(cat /proc/net/wireless | awk 'NR==3 { print $3}' | sed 's/\.//')
         if [ "$WIFI_SIGNAL" -gt 64 ]
         then
-            WIFI_SYMBOL="" #wifi high
+            WIFI_SYMBOL="" #wifi high
         elif [ "$WIFI_SIGNAL" -lt 65 ] && [ "$WIFI_SIGNAL" -gt 39 ]
         then
-            WIFI_SYMBOL="" #wifi mid
+            WIFI_SYMBOL="" #wifi mid
         elif [ "$WIFI_SIGNAL" -lt 40 ]
         then
-            WIFI_SYMBOL="" #wifi low
+            WIFI_SYMBOL="" #wifi low
         fi
-        echo "LA $WIFI_SYMBOL $WIFI_SSID" #connected 
+        echo "LA $WIFI_SSID$WIFI_SYMBOL" #connected 
     else
         echo "LC $WIFI_SSID"
     fi
