@@ -73,3 +73,12 @@ xterm*locale: true
 !*.color15:      #ffffff
 
 !vim: set filetype=xdefaults :
+
+rofi.color-enabled: true
+rofi.color-window: #10151B, #7FD4F0, #599CAB
+rofi.color-normal: #10151B, #99D1CE, #14191F, #D26936, #ffffff
+rofi.color-active: #10151B, #80cbc4, #14191F, #394249, #80cbc4
+rofi.color-urgent: #10151B, #ff1844, #14191F, #394249, #ff1844
+rofi.hide-scrollbar: true
+rofi.font: Dejavu Sans Mono 12
+rofi.terminal: uxterm

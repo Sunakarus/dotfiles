@@ -42,6 +42,10 @@ function trash_put {
     trash-put $1
     set_trash
 }
+function sudo_trash_put {
+    sudo trash-put $1
+    set_trash
+}
 
 # says what package commands are in
 source /usr/share/doc/pkgfile/command-not-found.zsh
@@ -56,27 +60,35 @@ eval "$(dircolors ~/.dircolors)";
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # aliases
+alias sudo='sudo '
+alias shutdown="shutdown now"
+
 alias zshconfig="vim ~/.zshrc"
 alias zshsrc="source ~/.zshrc"
+alias xreload="xrdb ~/.Xresources"
+
 alias :q="exit"
 alias quit="exit"
+
+alias ls="ls -lh --color=auto"
+alias dirsize="df_format; echo ""; du -cksh * | sort -rh"
+
 alias pdf="openPdf"
+alias feh="openFeh"
+alias ncm="ncmpcpp"
+alias docprint='lpr -H ipp.doc.ic.ac.uk -U htn15 -P ICTMono'
+
 alias v="vim"
 alias vi="vim"
-alias ls="ls -lh --color=auto"
-alias svim="sudo -E vim"
 alias sv="sudo -E vim"
-alias xreload="xrdb ~/.Xresources"
-alias shutdown="shutdown now"
-alias docprint='lpr -H ipp.doc.ic.ac.uk -U htn15 -P ICTMono'
-alias feh="openFeh"
+
 alias yasu="yaourt -Syu --aur"
 alias ys="yaourt -S"
-alias ncm="ncmpcpp"
-alias dirsize="df_format; echo ""; du -cksh * | sort -rh"
+
 alias cp="rsync -ah --progress"
-alias sucp="sudo rsync -ah --progress"
+
 alias tp="trash_put"
+alias stp="sudo_trash_put"
 alias tl="trash-list"
 alias te="trash-empty && set_trash"
 alias tre="trash-restore && set_trash"

@@ -8,6 +8,7 @@ num_mon=$(bspc query -M | wc -l)
 
  #initialization
 pac="  - "
+trash="  - "
 volume="%{F$COLOR_VOLUME}%{B$COLOR_SYS_BG}  - %{B-}%{F-}"
 track="%{F$COLOR_MUSIC_PAUSED}%{B$COLOR_SYS_BG}-  %{B-}%{F-}"
 
