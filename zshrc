@@ -37,6 +37,12 @@ function openFeh {
     disown
 }
 
+#trash
+function trash_put {
+    trash-put $1
+    set_trash
+}
+
 # says what package commands are in
 source /usr/share/doc/pkgfile/command-not-found.zsh
 
@@ -70,3 +76,8 @@ alias ncm="ncmpcpp"
 alias dirsize="df_format; echo ""; du -cksh * | sort -rh"
 alias cp="rsync -ah --progress"
 alias sucp="sudo rsync -ah --progress"
+alias tp="trash_put"
+alias tl="trash-list"
+alias te="trash-empty && set_trash"
+alias tre="trash-restore && set_trash"
+alias rm="echo 'Use: trash-put'"

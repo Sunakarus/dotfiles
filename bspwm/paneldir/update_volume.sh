@@ -27,4 +27,4 @@ else
     vol="V mute"
 fi
 
-echo "$vol" > $PANEL_FIFO
+echo "$vol" >> $PANEL_FIFO

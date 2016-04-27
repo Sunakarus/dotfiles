@@ -49,6 +49,19 @@ while read -r line ; do
             fi
             est_time="%{B$COLOR_SYS_BG}$symbol%{F$est_time_color}$padding${line#?} %{B-}%{F-}"
             ;;
+        R*)
+            # trash
+
+            trash=${line#?}
+            trash_color=$COLOR_FOCUSED_OCCUPIED_FG
+            trashnum=$(echo "$trash" | cut -d' ' -f3)
+            if [ $trashnum -lt 1 ]
+            then
+                trash_color=$COLOR_OCCUPIED_FG
+                trash=$(echo "$trash" | sed "s/$trashnum/%{F$COLOR_FOCUSED_OCCUPIED_FG}$trashnum%{F-}/")
+            fi
+            trash="%{F$trash_color}%{B$COLOR_SYS_BG}$trash%{B-}%{F-}"
+            ;;
         P*)
             # pacman upgrades
 
@@ -206,6 +219,6 @@ while read -r line ; do
 			;;
 	esac
     power="%{F$COLOR_POWER}%{B${COLOR_SYS_BG}}%{A:sh shutdowndialog.sh & disown:}  %{A}%{B-}%{F-}"
-	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}|${battery}${est_time}|${wifi}|${volume}|${date}|${sys}|${pac}|${power}"
+	printf "%s\n" "%{l}${wm}${title}%{r}  ${track}|${battery}${est_time}|${wifi}|${volume}|${pac}|${trash}|${date}|${sys}|${power}"
 
 done

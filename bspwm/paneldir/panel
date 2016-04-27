@@ -28,6 +28,7 @@ bspc config top_padding $PANEL_HEIGHT
 bspc subscribe report > "$PANEL_FIFO" &
 
 sh update_volume.sh & #initial volume set
+set_trash &
 
 # title
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
