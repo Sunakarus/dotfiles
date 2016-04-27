@@ -20,13 +20,15 @@ fi
 
 total=$(ls -l | grep -c ^d)
 curr=1
+bold=$(tput bold)
+normal=$(tput sgr0)
 
 for d in */ ; do
     cd $d
     url=$(git config --get remote.origin.url)
     if [[ ! -z $url ]] && [[ $url != *"Sunakarus/dotfiles"* ]]
     then
-        echo "[$curr/$total] $url"
+        echo "[$curr/$total] ${bold}$url${normal}"
         if [ $GENERATE_CLONE == 1 ]
         then
             echo "git clone $url" >> ../$file

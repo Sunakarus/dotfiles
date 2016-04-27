@@ -6,6 +6,12 @@ then
 elif [ "$1" == "down" ]
 then
     xbacklight -dec $step
+elif [ "$1" == "max" ]
+then
+    xbacklight -set 100
+elif [ "$1" == "min" ]
+then
+    xbacklight -set 5
 fi
 
 bl=$(xbacklight | cut -d'.' -f1)
@@ -49,4 +55,4 @@ fi
 
 msg="TBrightness: $bl $msg"
 
-echo "$msg" > $PANEL_FIFO
+echo "$msg" >> $PANEL_FIFO

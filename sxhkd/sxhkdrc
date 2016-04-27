@@ -3,23 +3,24 @@
 #
 XF86MonBrightnessUp
     ./dotfiles/bspwm/paneldir/set_brightness.sh up
-    #xbacklight -inc 10;./dotfiles/sxhkd/brightness
 
 XF86MonBrightnessDown
     ./dotfiles/bspwm/paneldir/set_brightness.sh down
-    #xbacklight -dec 10;./dotfiles/sxhkd/brightness
+
+super + XF86MonBrightnessUp
+    ./dotfiles/bspwm/paneldir/set_brightness.sh max
+
+super + XF86MonBrightnessDown
+    ./dotfiles/bspwm/paneldir/set_brightness.sh min
 
 XF86AudioLowerVolume
     ./dotfiles/bspwm/paneldir/update_volume.sh down
-    #amixer -q sset Master 3%-
 
 XF86AudioRaiseVolume
     ./dotfiles/bspwm/paneldir/update_volume.sh up
-    #amixer -q sset Master 3%+
 
 XF86AudioMute
     ./dotfiles/bspwm/paneldir/update_volume.sh toggle
-    #amixer set Master toggle
 
 Print
     scrot -e 'mv $f ~/screenshots/'
@@ -37,7 +38,7 @@ super + Home
     mpc toggle
 
 super + End
-    uxterm -e ncmpcpp
+    ./dotfiles/bspwm/paneldir/toggle_ncm.sh
 
 super + Prior
     mpc prev
