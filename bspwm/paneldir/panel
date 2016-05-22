@@ -28,7 +28,7 @@ bspc config top_padding $PANEL_HEIGHT
 bspc subscribe report > "$PANEL_FIFO" &
 
 sh update_volume.sh & #initial volume set
-set_trash &
+set_trash & #set number of items in trash
 
 # title
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
@@ -89,6 +89,8 @@ done > "$PANEL_FIFO" &
 while true;
 do
     pac=$(checkupdates | wc -l)
+    #aur=$(cower -u | wc -l)
+    pac=$[$pac]
     if [ "$pac" -ge 1 ]
     then
         echo "P%{A:uxterm -hold -e yaourt -Syua & disown:}  $pac %{A}" #full star 
@@ -144,7 +146,7 @@ done > "$PANEL_FIFO" &
 # current mpd track
 while true;
 do
-    if [ -z $(pgrep -x mpd) ]
+    if [ -z "$(pgrep -x mpd)" ]
     then
         echo "MMPD off"
         sleep 5;
@@ -153,6 +155,10 @@ do
         CURRENT_TRACK=$(truncate_str "$CURRENT_TRACK")
         echo "M$CURRENT_TRACK"
         mpc idle;
+        if [ "$?" != 0 ];
+        then
+            sleep 1;
+        fi
     fi
 done > "$PANEL_FIFO" &
 

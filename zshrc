@@ -68,6 +68,7 @@ alias zshsrc="source ~/.zshrc"
 alias xreload="xrdb ~/.Xresources"
 
 alias :q="exit"
+alias :Q="exit"
 alias quit="exit"
 
 alias ls="ls -lh --color=auto"

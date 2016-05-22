@@ -15,6 +15,9 @@ inoremap jj <ESC>
 set backspace=indent,eol,start
 set number
 
+"for easier resizing of splits
+set mouse=a
+
 "buffer navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>

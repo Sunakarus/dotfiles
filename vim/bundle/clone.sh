@@ -6,9 +6,11 @@ git clone https://github.com/nanotech/jellybeans.vim.git
 git clone https://github.com/tomasr/molokai.git
 git clone https://github.com/scrooloose/nerdcommenter.git
 git clone https://github.com/scrooloose/nerdtree.git
+git clone https://github.com/unblevable/quick-scope.git
 git clone https://github.com/scrooloose/syntastic.git
 git clone https://github.com/godlygeek/tabular.git
 git clone https://github.com/ternjs/tern_for_vim.git
+git clone https://github.com/coderifous/textobj-word-column.vim.git
 git clone https://github.com/vim-airline/vim-airline
 git clone https://github.com/vim-airline/vim-airline-themes
 git clone https://github.com/gioele/vim-autoswap.git
