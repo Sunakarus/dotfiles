@@ -1,3 +1,5 @@
+source ~/.xinitrc
+
 # set keyboard layout
 setxkbmap -layout cz -variant qwerty_bksl
 

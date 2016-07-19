@@ -88,9 +88,13 @@ alias ys="yaourt -S"
 
 alias cp="rsync -ah --progress"
 
+alias remake="make clean; make"
 alias tp="trash_put"
 alias stp="sudo_trash_put"
 alias tl="trash-list"
 alias te="trash-empty && set_trash"
 alias tre="trash-restore && set_trash"
 alias rm="echo 'Use: trash-put'"
+
+alias sl="ls -lh --color=auto"
+alias gs="git status"

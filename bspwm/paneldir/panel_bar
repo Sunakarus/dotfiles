@@ -10,7 +10,7 @@ num_mon=$(bspc query -M | wc -l)
 pac="  - "
 trash="  - "
 volume="%{F$COLOR_VOLUME}%{B$COLOR_SYS_BG}  - %{B-}%{F-}"
-track="%{F$COLOR_MUSIC_PAUSED}%{B$COLOR_SYS_BG}-  %{B-}%{F-}"
+track="%{F$COLOR_MUSIC_PAUSED}%{B$COLOR_SYS_BG}Loading track...  %{B-}%{F-}"
 
 while read -r line ; do
 	case $line in
