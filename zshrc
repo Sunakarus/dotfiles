@@ -9,7 +9,7 @@ ZSH_THEME="bira"
 plugins=(git colored-man-pages safe-paste zsh-autosuggestions zsh-syntax-highlighting)
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/akarus/.gem/ruby/2.3.0/bin"
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment

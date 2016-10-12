@@ -1,4 +1,4 @@
-xterm*faceName: DejaVu Sans Mono for Powerline:size=8:antialias=false
+xterm*faceName: DejaVu Sans Mono for Powerline:size=8:antialias=true
 !xterm*faceName: Terminess Powerline:size=8:antialias=false
 !xterm*faceName: Font Awesome:size=8:antialias=false
 xterm*locale: true
