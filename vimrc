@@ -3,7 +3,7 @@ set langmenu=en_US.UTF-8
 set encoding=utf-8
 syntax on
 filetype plugin indent on
-
+        
 execute pathogen#infect()
 set term=xterm
 set t_Co=256
@@ -17,6 +17,7 @@ set number
 
 set lazyredraw
 set showmatch
+set clipboard^=unnamed,unnamedplus
 
 " The Silver Searcher
 if executable('ag')
@@ -114,16 +115,13 @@ hi User5 ctermfg=227 ctermbg=234
 "command autocompletion options
 set wildmenu
 set wildmode=longest:list,full
-
+    
 nnoremap - /
 nnoremap <leader>h :nohlsearch<CR>
 
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
+"better pasting of long blocks of text
+map <silent> <leader>p :set paste<CR>]p:set nopaste<CR>
+map <silent> <leader>P :set paste<CR>]P:set nopaste<CR>
 
 map Q @q
 
