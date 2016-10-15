@@ -93,7 +93,7 @@ do
     pac=$[$pac]
     if [ "$pac" -ge 1 ]
     then
-        echo "P%{A:uxterm -hold -e pacaur -Syua & disown:}  $pac %{A}" #full star 
+        echo "P%{A:uxterm -hold -e pacaur -Syu & disown:}  $pac %{A}" #full star 
     else
         echo "P  $pac " #empty star 
     fi
