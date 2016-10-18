@@ -10,14 +10,18 @@ set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 
+" basic tweaks
 let mapleader="\<Space>"
 inoremap jj <ESC>
 set backspace=indent,eol,start
 set number
-
-set lazyredraw
-set showmatch
 set clipboard^=unnamed,unnamedplus
+
+" faster redrawing
+set lazyredraw
+
+" make split window borders look nicer
+set fillchars=vert:│,fold:─,diff:─
 
 " The Silver Searcher
 if executable('ag')
@@ -123,6 +127,7 @@ nnoremap <leader>h :nohlsearch<CR>
 map <silent> <leader>p :set paste<CR>]p:set nopaste<CR>
 map <silent> <leader>P :set paste<CR>]P:set nopaste<CR>
 
+"for easier access to macros
 map Q @q
 
 "common typos
@@ -130,6 +135,7 @@ cnoreabbrev W w
 cnoreabbrev WQ wq
 cnoreabbrev Q q
 
+"syntastic
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open=1
