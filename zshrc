@@ -83,8 +83,9 @@ alias v="vim"
 alias vi="vim"
 alias sv="sudo -E vim"
 
-alias yasu="pacaur -Syu"
-alias ys="pacaur -S"
+alias pasu="pacaur -Syu"
+alias pas="pacaur -s"
+alias paS="pacaur -S"
 
 alias cp="rsync -ah --progress"
 

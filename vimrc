@@ -141,5 +141,11 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
 
+"CtrlP + ctags
+map <leader>. :CtrlPTag<CR>
+
+"TagBar
+map <Tab> :TagbarToggle<CR>
+
 " czech keybinds
 set langmap=+1,ě2,š3,č4,ř5,ž6,ý7,á8,í9,é0,1!,2@,3#,4$,5%,6^,7&,8*
