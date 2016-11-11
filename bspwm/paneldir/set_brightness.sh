@@ -32,32 +32,35 @@ msg=""
 
 if (( 0 <= $bl && $bl <= 9))
 then
-    msg="$col•$end○○○○○○○○○"
-elif (( 10 <= $bl && $bl <= 19))
+    msg="$col  •$end○○○○○○○○○"
+elif (( $bl == 10))
 then
-    msg="$col••$end○○○○○○○○"
-elif (( 20 <= $bl && $bl <= 29))
+    msg="$col •$end○○○○○○○○○"
+elif (( 11 <= $bl && $bl <= 20))
 then
-    msg="$col•••$end○○○○○○○"
-elif (( 30 <= $bl && $bl <= 39))
+    msg="$col ••$end○○○○○○○○"
+elif (( 21 <= $bl && $bl <= 30))
 then
-    msg="$col••••$end○○○○○○"
-elif (( 40 <= $bl && $bl <= 49))
+    msg="$col •••$end○○○○○○○"
+elif (( 31 <= $bl && $bl <= 40))
 then
-    msg="$col•••••$end○○○○○"
-elif (( 50 <= $bl && $bl <= 59))
+    msg="$col ••••$end○○○○○○"
+elif (( 41 <= $bl && $bl <= 50))
 then
-    msg="$col••••••$end○○○○"
-elif (( 60 <= $bl && $bl <= 69))
+    msg="$col •••••$end○○○○○"
+elif (( 51 <= $bl && $bl <= 60))
 then
-    msg="$col•••••••$end○○○"
-elif (( 70 <= $bl && $bl <= 79))
+    msg="$col ••••••$end○○○○"
+elif (( 61 <= $bl && $bl <= 70))
 then
-    msg="$col••••••••$end○○"
-elif (( 80 <= $bl && $bl <= 89))
+    msg="$col •••••••$end○○○"
+elif (( 71 <= $bl && $bl <= 80))
 then
-    msg="$col•••••••••$end○"
-elif (( 90 <= $bl && $bl <= 100))
+    msg="$col ••••••••$end○○"
+elif (( 81 <= $bl && $bl <= 90))
+then
+    msg="$col •••••••••$end○"
+elif (( 91 <= $bl && $bl <= 100))
 then
     msg="$col••••••••••$end"
 fi
