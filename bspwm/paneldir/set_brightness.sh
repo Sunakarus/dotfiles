@@ -1,11 +1,13 @@
 #! /bin/bash
 
 # Ensure only one running script at a time
-if [ $(pidof -x set_brightness.sh| wc -w) -gt 2 ]; then 
+if [ $(pidof -x set_brightness.sh | wc -w) -gt 2 ]; then 
     exit
 fi
 
+# Brightness percent to reduce/increase
 step=10
+# Time in miliseconds for brightness to change
 fade_time=100
 if [ "$1" == "up" ]
 then

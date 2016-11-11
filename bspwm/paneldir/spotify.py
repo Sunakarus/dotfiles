@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 
 import dbus
 session_bus = dbus.SessionBus()
@@ -14,4 +14,4 @@ metadata = spotify_properties.Get("org.mpris.MediaPlayer2.Player", "Metadata")
 
 # To just print the title
 if len(metadata['xesam:albumArtist']) > 0:
-    print metadata['xesam:albumArtist'][0] + " - " + metadata['xesam:title']
+    print(metadata['xesam:albumArtist'][0] + " - " + metadata['xesam:title'])

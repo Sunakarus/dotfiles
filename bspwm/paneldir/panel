@@ -137,7 +137,7 @@ do
 
     if [ $(pgrep -xo spotify) ]
     then
-        SPOTIFY_TRACK=$(python2 .config/bspwm/paneldir/spotify.py)
+        SPOTIFY_TRACK=$(.config/bspwm/paneldir/spotify.py)
         SPOTIFY_TRACK=$(truncate_str "$SPOTIFY_TRACK")
 
         if [[ ! -z "$SPOTIFY_TRACK" ]]
