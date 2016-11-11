@@ -117,31 +117,40 @@ do
 sleep 5;
 done > "$PANEL_FIFO" &
 
-##spotify
-##UNTESTED - because spotify keeps segfaulting on startup
-#while true;
-#do
-    ## for when spotify is turned off
-    #oldspotflag=$spotflag
-    #if [ "$oldspotflag" != "$spotflag" ]
-    #then
-        #echo "M$CURRENT_TRACK"
-    #fi
-    #spotflag=0
-    #if [ $(pgrep -xo spotify) ]
-    #then
-        #spotflag=1
-        #SPOTIFY_TRACK=$(python2 spotify.py)
-        #SPOTIFY_TRACK=$(truncate_str $SPOTIFY_TRACK)
-        #if [[ ! -z $SPOTIFY_TRACK ]]
-        #then
-            #echo "M$SPOTIFY_TRACK "
-        #else
-            #echo "- "
-        #fi
-    #fi
-    #sleep 1;
-#done > "$PANEL_FIFO" &
+#spotify
+while true;
+do
+    # for when spotify is turned off
+    oldspotflag=$spotflag
+
+    if [ $(pgrep -xo spotify) ]
+    then
+        spotflag=1
+    else
+        spotflag=0
+    fi
+
+    if [ "$oldspotflag" != "$spotflag" ]
+    then
+        echo "M "
+    fi
+
+    if [ $(pgrep -xo spotify) ]
+    then
+        SPOTIFY_TRACK=$(python2 .config/bspwm/paneldir/spotify.py)
+        SPOTIFY_TRACK=$(truncate_str "$SPOTIFY_TRACK")
+
+        if [[ ! -z "$SPOTIFY_TRACK" ]]
+        then
+            echo "M $SPOTIFY_TRACK "
+        else
+            echo "M - "
+        fi
+        sleep 1;
+    else
+        sleep 5;
+    fi
+done > "$PANEL_FIFO" &
 
 # current mpd track
 while true;

@@ -1,20 +1,27 @@
 #! /bin/bash
-step=5
-if [ "$1" == "up" ]
-then
-    xbacklight -inc $step
-elif [ "$1" == "down" ]
-then
-    xbacklight -dec $step
-elif [ "$1" == "max" ]
-then
-    xbacklight -set 100
-elif [ "$1" == "min" ]
-then
-    xbacklight -set 5
+
+# Ensure only one running script at a time
+if [ $(pidof -x set_brightness.sh| wc -w) -gt 2 ]; then 
+    exit
 fi
 
-bl=$(xbacklight | cut -d'.' -f1)
+step=10
+fade_time=100
+if [ "$1" == "up" ]
+then
+    xbacklight -inc $step -time $fade_time
+elif [ "$1" == "down" ]
+then
+    xbacklight -dec $step -time $fade_time
+elif [ "$1" == "max" ]
+then
+    xbacklight -set 100 -time $fade_time
+elif [ "$1" == "min" ]
+then
+    xbacklight -set 5 -time $fade_time
+fi
+
+bl=$(xbacklight | xargs printf "%.*f\n" 0)
 
 color="#F7C600"
 col="%{F$color}"
