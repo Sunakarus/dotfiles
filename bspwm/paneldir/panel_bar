@@ -91,6 +91,7 @@ while read -r line ; do
         M*)
             # current track
 
+            spotify=0
             music_color=$COLOR_MUSIC_PLAYING
             track_color=$COLOR_MUSIC_PLAYING_TRACK
             under_color=$COLOR_MUSIC_PLAYING
@@ -104,20 +105,35 @@ while read -r line ; do
                 under_color=$COLOR_MUSIC_PAUSED
             elif [[ $line == *''* ]] #spotify
             then
-                music_color=$COLOR_SPOTIFY
-                track_color=$COLOR_SPOTIFY_TRACK
-                under_color=$COLOR_SPOTIFY
+                spotify=1
+                line=${line#?}
+                if [[ $line == "A"* ]]
+                then
+                    music_color=$COLOR_SPOTIFY
+                    track_color=$COLOR_SPOTIFY_TRACK
+                    under_color=$COLOR_SPOTIFY
+                elif [[ $line == "S"* ]]
+                then
+                    music_color=$COLOR_SPOTIFY_PAUSED
+                    track_color=$COLOR_SPOTIFY_PAUSED_TRACK
+                    under_color=$COLOR_SPOTIFY_PAUSED
+                fi
             fi
             # underline/highlight track name
             track=$(echo "$line" | sed "s/\ -\ \(.*\)\(..\)$/\ -\ %{F$track_color}%{U$under_color}%{+u}\1%{-u}%{U-}%{F$music_color}\2/")
             track="%{F$music_color}%{B$COLOR_SYS_BG}${track#?} %{B-}%{F-}"
-
-            # mouse controls
-            track="%{A:mpc toggle:}$track%{A}"
-            track="%{A2:sh toggle_ncm.sh & disown:}$track%{A}"
-            track="%{A3:mpc next:}$track%{A}"
-            track="%{A4:mpc volume +5:}$track%{A}"
-            track="%{A5:mpc volume -5:}$track%{A}"
+            if [[ $spotify == 1 ]]
+            then
+                track="%{A:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause;~/.config/bspwm/paneldir/spotify_current_track.sh:}$track%{A}"
+                track="%{A3:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next;~/.config/bspwm/paneldir/spotify_current_track.sh:}$track%{A}"
+            else
+                # mouse controls
+                track="%{A:mpc toggle:}$track%{A}"
+                track="%{A2:sh toggle_ncm.sh & disown:}$track%{A}"
+                track="%{A3:mpc next:}$track%{A}"
+                track="%{A4:mpc volume +5:}$track%{A}"
+                track="%{A5:mpc volume -5:}$track%{A}"
+            fi
             ;;
         L*)
             # wifi

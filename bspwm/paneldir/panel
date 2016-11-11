@@ -130,26 +130,19 @@ do
         spotflag=0
     fi
 
-    if [ "$oldspotflag" != "$spotflag" ]
+    if [[ "$oldspotflag" != "$spotflag" && "$spotflag" == 0 ]]
     then
         echo "M "
     fi
 
-    if [ $(pgrep -xo spotify) ]
+    if [[ $spotflag == 1 ]]
     then
-        SPOTIFY_TRACK=$(.config/bspwm/paneldir/spotify.py)
-        SPOTIFY_TRACK=$(truncate_str "$SPOTIFY_TRACK")
-
-        if [[ ! -z "$SPOTIFY_TRACK" ]]
-        then
-            echo "M $SPOTIFY_TRACK "
-        else
-            echo "M - "
-        fi
+        ~/.config/bspwm/paneldir/spotify_current_track.sh
         sleep 1;
     else
         sleep 5;
     fi
+
 done > "$PANEL_FIFO" &
 
 # current mpd track
