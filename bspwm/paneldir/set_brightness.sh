@@ -61,7 +61,10 @@ then
 elif (( 81 <= bl && bl <= 90))
 then
     msg="$col •••••••••$end○"
-elif (( 91 <= bl && bl <= 100))
+elif (( 91 <= bl && bl < 100))
+then
+    msg="$col ••••••••••$end"
+elif ((bl == 100))
 then
     msg="$col••••••••••$end"
 fi
