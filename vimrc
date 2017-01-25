@@ -5,8 +5,9 @@ syntax on
 filetype plugin indent on
         
 execute pathogen#infect()
-set term=xterm
-set t_Co=256
+"set term=xterm
+"set t_Co=256
+set termguicolors
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 
@@ -17,6 +18,9 @@ set backspace=indent,eol,start
 set number
 set clipboard^=unnamed,unnamedplus
 
+" hide intro message
+set shortmess=I
+
 " faster redrawing
 set lazyredraw
 
@@ -24,7 +28,7 @@ set lazyredraw
 set fillchars=vert:│,fold:─,diff:─
 
 " The Silver Searcher
-if executable('ag')
+if executable('ag') 
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
 
@@ -133,6 +137,7 @@ map Q @q
 "common typos
 cnoreabbrev W w
 cnoreabbrev WQ wq
+cnoreabbrev Wq wq
 cnoreabbrev Q q
 
 "syntastic
@@ -140,6 +145,9 @@ let g:syntastic_always_populate_loc_list=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
+
+"YouCompleteMe
+let g:ycm_confirm_extra_conf = 0
 
 "CtrlP + ctags
 map <leader>. :CtrlPTag<CR>

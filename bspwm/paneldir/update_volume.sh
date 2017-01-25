@@ -1,15 +1,16 @@
 #! /bin/bash
 step=5
-if [ "$1" == "up" ]
-then
-    amixer set Master $step%+ -M
-elif [ "$1" == "down" ]
-then
-    amixer set Master $step%- -M
-elif [ "$1" == "toggle" ]
-then
-    amixer set Master toggle
-fi
+case "$1" in
+    up)
+        amixer set Master $step%+ -M
+        ;;
+    down)
+        amixer set Master $step%- -M
+        ;;
+    toggle)
+        amixer set Master toggle
+        ;;
+esac
 
 ALSA_VOLUME=$(amixer get Master | grep 'Left: Playback' | grep -o '...%' | sed 's/\[//' | sed 's/%//' | sed 's/ //')
 ALSA_STATE=$(amixer get Master | grep 'Left: Playback' | grep -o '\[on]')
@@ -27,4 +28,4 @@ else
     vol="V mute"
 fi
 
-echo "$vol" >> $PANEL_FIFO
+echo "$vol" >> "$PANEL_FIFO"

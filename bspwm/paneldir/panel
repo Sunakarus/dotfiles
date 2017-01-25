@@ -2,17 +2,13 @@
 
 PANEL_FONT_FAMILY="TerminessPowerline:size=8"
 ICON_FONT="FontAwesome:size=10"
-ICON_FONT2="Siji:size=8"
-
-#if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
-	#printf "%s\n" "The panel is already running." >&2
-	#exit 1
-#fi
+ICON_FONT2="-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1"
+UNDERLINE_THICKNESS=1
 
 # Kill any panel processes older than us, instead of bailing like the example
 # does. That caused one too many panel-less boots for me.
  
-while [ $(pgrep -cx panel) -gt 1 ] ; do
+while [ "$(pgrep -cx panel)" -gt 1 ] ; do
     pkill -ox -9 panel
 done
      
@@ -24,7 +20,7 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
-bspc config top_padding $PANEL_HEIGHT
+bspc config top_padding "$PANEL_HEIGHT"
 bspc subscribe report > "$PANEL_FIFO" &
 
 sh update_volume.sh & #initial volume set
@@ -37,7 +33,7 @@ xtitle -sf 'T%s' > "$PANEL_FIFO" &
 clock -sf 'S%H:%M' > "$PANEL_FIFO" &
 
 # truncate strings that are too long
-function truncate_str {
+truncate_str() {
     maxlen=60
     track="$1"
 
@@ -52,7 +48,6 @@ function truncate_str {
 # battery
 while true;
 do
-    #BAT_LEVEL=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep "percentage" | sed 's/\s//g' | cut -d: -f2 | sed 's/%//')
     BAT_LEVEL=$(battery | cut -d' ' -f2)
 
     SYMBOL="" # full battery
@@ -72,15 +67,19 @@ do
         SYMBOL="" # empty 
     fi
 
-    if [ "$BAT_LEVEL" == 100 ];
+    if [ "$BAT_LEVEL" = 100 ];
     then
         echo "B$SYMBOL $BAT_LEVEL%"
         sleep 5;
-    elif [[ $(battery) == "Charging"* ]]
-    then
-        echo "B $SYMBOL $BAT_LEVEL%"
     else
-        echo "B$SYMBOL $BAT_LEVEL%"
+        case "$(battery)" in
+        Charging*)
+            echo "B $SYMBOL $BAT_LEVEL%"
+        ;;
+        *)
+            echo "B$SYMBOL $BAT_LEVEL%"
+        ;;
+        esac
     fi
 sleep 1;
 done > "$PANEL_FIFO" &
@@ -89,8 +88,6 @@ done > "$PANEL_FIFO" &
 while true;
 do
     pac=$(checkupdates | wc -l)
-    #aur=$(cower -u | wc -l)
-    pac=$[$pac]
     if [ "$pac" -ge 1 ]
     then
         echo "P%{A:uxterm -hold -e pacaur -Syu & disown:}  $pac %{A}" #full star 
@@ -108,11 +105,15 @@ do
     if [ "$BAT_LEVEL" == 100 ] || [[ ! $ESTIMATED_TIME == *":"* ]];
     then
         echo "E"
-    elif [[ $(battery) == "Discharging"* ]]
-    then
-        echo "E${ESTIMATED_TIME}"
     else
-        echo "E${ESTIMATED_TIME}"
+        case "$(battery)" in
+            Discharging*)
+                echo "E${ESTIMATED_TIME}"
+                ;;
+            *)
+                echo "E${ESTIMATED_TIME}"
+                ;;
+        esac
     fi
 sleep 5;
 done > "$PANEL_FIFO" &
@@ -123,7 +124,7 @@ do
     # for when spotify is turned off
     oldspotflag=$spotflag
 
-    if [ $(pgrep -xo spotify) ]
+    if [ "$(pgrep -xo spotify)" ]
     then
         spotflag=1
     else
@@ -135,7 +136,7 @@ do
         echo "M "
     fi
 
-    if [[ $spotflag == 1 ]]
+    if [[ "$spotflag" == 1 ]]
     then
         ~/.config/bspwm/paneldir/spotify_current_track.sh
         sleep 1;
@@ -167,14 +168,14 @@ done > "$PANEL_FIFO" &
 # alsa volume
 while true;
 do
-    if [ $(pgrep -x pavucontrol) ]
+    if [ "$(pgrep -x pavucontrol)" ]
     then
         sh update_volume.sh
         sleep 0.1
     else
         sleep 5
     fi
-done > $PANEL_FIFO &
+done > "$PANEL_FIFO" &
 
 # wifi
 while true;
@@ -187,7 +188,7 @@ do
         echo "LD Disconnected"
     elif [ ! -z "$WIFI_IP" ];
     then
-        WIFI_SIGNAL=$(cat /proc/net/wireless | awk 'NR==3 { print $3}' | sed 's/\.//')
+        WIFI_SIGNAL=$(awk 'NR==3 { print $3}' /proc/net/wireless | sed 's/\.//')
         if [ "$WIFI_SIGNAL" -gt 64 ]
         then
             WIFI_SYMBOL="" #wifi high
@@ -203,24 +204,22 @@ do
         echo "LC $WIFI_SSID"
     fi
 sleep 1
-done > $PANEL_FIFO &
+done > "$PANEL_FIFO" &
 
 # date
 while true;
   do 
       echo "D $(LC_ALL=en_US.UTF-8 date +'%a %d.%m.%Y')"
   sleep 10
-done > $PANEL_FIFO &
+done > "$PANEL_FIFO" &
 
 . panel_colors
 
-UNDERLINE_THICKNESS=1
-
-panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT" -f "$ICON_FONT2" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "$COLOR_UNDERLINE" -u $UNDERLINE_THICKNESS | sh &
+panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x"$PANEL_HEIGHT" -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT" -f "$ICON_FONT2" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "$COLOR_UNDERLINE" -u "$UNDERLINE_THICKNESS" | sh &
 
 wid=$(xdo id -a "$PANEL_WM_NAME")
 tries_left=20
-while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
+while [ -z "$wid" ] && [ "$tries_left" -gt 0 ] ; do
 	sleep 0.05
 	wid=$(xdo id -a "$PANEL_WM_NAME")
 	tries_left=$((tries_left - 1))

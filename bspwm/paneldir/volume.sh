@@ -1,5 +1,5 @@
 #! /bin/bash
-if [ -z $(pgrep -x pavucontrol) ]
+if [ -z "$(pgrep -x pavucontrol)" ]
 then
     pavucontrol
 else

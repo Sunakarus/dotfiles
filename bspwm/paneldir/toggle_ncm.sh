@@ -1,5 +1,5 @@
 #! /bin/bash
-if [ -z $(pgrep -x ncmpcpp) ]
+if [ -z "$(pgrep -x ncmpcpp)" ]
 then
     uxterm -e ncmpcpp
 else

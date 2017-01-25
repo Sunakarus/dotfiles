@@ -59,6 +59,27 @@ eval "$(dircolors ~/.dircolors)";
 # colored completion - use LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
+# better watch
+function watcher()
+{ 
+  WATCHERTIME=$1
+  WATCHERFILE=/tmp/watcher$$
+  shift
+  while true; do
+    WATCHERHEIGHT=$(($LINES - 5))
+    ( eval $* ) | tail -n ${WATCHERHEIGHT} > ${WATCHERFILE} 2>/dev/null
+    clear
+    /bin/echo -n "Every ${WATCHERTIME} seconds - "
+    date
+    /bin/echo
+    cat ${WATCHERFILE}
+    \rm -f ${WATCHERFILE}
+    /bin/echo
+    /bin/echo "=="
+    sleep ${WATCHERTIME}
+  done
+}
+
 # aliases
 alias sudo='sudo '
 alias shutdown="shutdown now"
@@ -99,3 +120,10 @@ alias rm="echo 'Use: trash-put'"
 
 alias sl="ls -lh --color=auto"
 alias gs="git status"
+
+# Prolog
+alias sicstus="rlwrap ~/bin/sicstus4.3.2/bin/sicstus"
+
+# Pintos
+export PATH="$PATH:/home/akarus/pintos/src/utils"
+alias pos="cd /home/akarus/pintos"

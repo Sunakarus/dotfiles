@@ -48,7 +48,7 @@ super + Next
 
 # terminal emulator
 super + Return
-	uxterm
+	st
 
 # program launcher
 super + space

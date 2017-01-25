@@ -1,5 +1,5 @@
 #! /bin/bash
-if [ -z $(pgrep -x Xdialog) ]
+if [ -z "$(pgrep -x Xdialog)" ]
 then
     USER=$(whoami)
     DIALOG=Xdialog
@@ -13,7 +13,7 @@ then
                     'Reboot' "" \
                     1> /tmp/exitval.$$ 2> /dev/null
 
-    ACTION=`cat /tmp/exitval.$$`
+    ACTION=$(cat /tmp/exitval.$$)
     rm -f /tmp/exitval.$$
 
     case $ACTION in

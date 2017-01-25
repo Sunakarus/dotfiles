@@ -1,5 +1,5 @@
 #! /bin/bash
-if [ -z $(pgrep -x wpa_gui) ]
+if [ -z "$(pgrep -x wpa_gui)" ]
 then
     wpa_gui -i wlp9s0
 else

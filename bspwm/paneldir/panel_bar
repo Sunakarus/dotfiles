@@ -38,16 +38,18 @@ while read -r line ; do
             symbol=" »"
             padding=" "
             est_time_color=$COLOR_URGENT_FG
-            if [[ $line == *'' ]] #charging
-            then
-                est_time_color=$COLOR_FOCUSED_OCCUPIED_FG
-            elif [[ $line == *'' ]] #discharging
-            then
-                est_time_color=$COLOR_OCCUPIED_FG
-            else
-                symbol=""
-                padding=""
-            fi
+            case "$line" in
+                *'') # Charging
+                    est_time_color=$COLOR_FOCUSED_OCCUPIED_FG
+                    ;;
+                *'') # Discharging
+                    est_time_color=$COLOR_OCCUPIED_FG
+                    ;;
+                *)
+                    symbol=""
+                    padding=""
+                    ;;
+            esac
             est_time="%{B$COLOR_SYS_BG}$symbol%{F$est_time_color}$padding${line#?} %{B-}%{F-}"
             ;;
         R*)
@@ -56,7 +58,7 @@ while read -r line ; do
             trash=${line#?}
             trash_color=$COLOR_FOCUSED_OCCUPIED_FG
             trashnum=$(echo "$trash" | cut -d' ' -f3)
-            if [ $trashnum -lt 1 ]
+            if [ "$trashnum" -lt 1 ]
             then
                 trash_color=$COLOR_OCCUPIED_FG
                 trash=$(echo "$trash" | sed "s/$trashnum/%{F$COLOR_FOCUSED_OCCUPIED_FG}$trashnum%{F-}/")
@@ -68,13 +70,14 @@ while read -r line ; do
 
             pac=${line#?}
             pac_color=$COLOR_FOCUSED_OCCUPIED_FG
-            if [[ "$pac" == *''* ]] #empty star
-            then
-                pac=$(echo "$pac" | sed "s//%{F$COLOR_OCCUPIED_FG}%{F$pac_color}/")
-            elif [[ "$pac" == *''* ]] #full star
-            then
-                pac=$(echo "$pac" | sed "s//%{F$COLOR_URGENT_FG}%{F$pac_color}/")
-            fi
+            case "$pac" in
+                *''*) #empty star
+                    pac=$(echo "$pac" | sed "s//%{F$COLOR_OCCUPIED_FG}%{F$pac_color}/")
+                    ;;
+                *''*) #full star
+                    pac=$(echo "$pac" | sed "s//%{F$COLOR_URGENT_FG}%{F$pac_color}/")
+                    ;;
+            esac
             pac="%{F$pac_color}%{B$COLOR_SYS_BG}$pac%{B-}%{F-}"
             ;;
         V*)
@@ -90,47 +93,56 @@ while read -r line ; do
             ;;
         M*)
             # current track
-
+            line=${line#?}
             spotify=0
             music_color=$COLOR_MUSIC_PLAYING
             track_color=$COLOR_MUSIC_PLAYING_TRACK
             under_color=$COLOR_MUSIC_PLAYING
-            if [[ $line == *"MPD off" ]]
-            then
-                music_color=$COLOR_MPD_OFF
-            elif [[ $line == *''* ]] #paused
-            then
-                music_color=$COLOR_MUSIC_PAUSED
-                track_color=$COLOR_MUSIC_PAUSED_TRACK
-                under_color=$COLOR_MUSIC_PAUSED
-            elif [[ $line == *''* ]] #spotify
-            then
-                spotify=1
-                line=${line#?}
-                if [[ $line == "A"* ]]
-                then
-                    music_color=$COLOR_SPOTIFY
-                    track_color=$COLOR_SPOTIFY_TRACK
-                    under_color=$COLOR_SPOTIFY
-                elif [[ $line == "S"* ]]
-                then
-                    music_color=$COLOR_SPOTIFY_PAUSED
-                    track_color=$COLOR_SPOTIFY_PAUSED_TRACK
-                    under_color=$COLOR_SPOTIFY_PAUSED
-                fi
-            fi
+            case "$line" in
+                *"MPD off")
+                    music_color=$COLOR_MPD_OFF
+                    ;;
+                *''*) # paused
+                    music_color=$COLOR_MUSIC_PAUSED
+                    track_color=$COLOR_MUSIC_PAUSED_TRACK
+                    under_color=$COLOR_MUSIC_PAUSED
+                    ;;
+                *''*) # spotify
+                    line=${line#?}
+                    spotify=1
+                    case "$line" in
+                        A*)
+                            music_color=$COLOR_SPOTIFY
+                            track_color=$COLOR_SPOTIFY_TRACK
+                            under_color=$COLOR_SPOTIFY
+                            ;;
+                        S*)
+                            music_color=$COLOR_SPOTIFY_PAUSED
+                            track_color=$COLOR_SPOTIFY_PAUSED_TRACK
+                            under_color=$COLOR_SPOTIFY_PAUSED
+                            ;;
+                    esac
+                    line=${line#?}
+                    ;;
+            esac
             # underline/highlight track name
             track=$(echo "$line" | sed "s/\ -\ \(.*\)\(..\)$/\ -\ %{F$track_color}%{U$under_color}%{+u}\1%{-u}%{U-}%{F$music_color}\2/")
-            track="%{F$music_color}%{B$COLOR_SYS_BG}${track#?} %{B-}%{F-}"
-            if [[ $spotify == 1 ]]
+            track="%{F$music_color}%{B$COLOR_SYS_BG}${track} %{B-}%{F-}"
+            if [ "$spotify" = 1 ]
             then
+                # LMB to toggle play/pause
                 track="%{A:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause;~/.config/bspwm/paneldir/spotify_current_track.sh:}$track%{A}"
+                # RMB to go to next song
                 track="%{A3:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next;~/.config/bspwm/paneldir/spotify_current_track.sh:}$track%{A}"
             else
                 # mouse controls
+                # LMB to toggle play/pause
                 track="%{A:mpc toggle:}$track%{A}"
+                # Middle click to start/quit ncmpcpp
                 track="%{A2:sh toggle_ncm.sh & disown:}$track%{A}"
+                # RMB to go to next song
                 track="%{A3:mpc next:}$track%{A}"
+                # Mousewheel to adjust volume
                 track="%{A4:mpc volume +5:}$track%{A}"
                 track="%{A5:mpc volume -5:}$track%{A}"
             fi
@@ -140,13 +152,14 @@ while read -r line ; do
 
             WIFI_COLOR=$COLOR_WIFI_CONNECTING
             line=${line#?}
-            if [[ $line == "A"* ]]
-            then
-                WIFI_COLOR=$COLOR_WIFI_CONNECTED
-            elif [[ $line == "D"* ]]
-            then
-                WIFI_COLOR=$COLOR_WIFI_DISCONNECTED
-            fi
+            case "$line" in
+                A*)
+                    WIFI_COLOR=$COLOR_WIFI_CONNECTED
+                    ;;
+                D*)
+                    WIFI_COLOR=$COLOR_WIFI_DISCONNECTED
+                    ;;
+            esac
             wifi="%{F$WIFI_COLOR}%{B$COLOR_SYS_BG}%{A:sh toggle_wpa_gui.sh & disown:}${line#?} %{A}%{B-}%{F-}"
             ;;
         D*)
@@ -169,13 +182,13 @@ while read -r line ; do
 
 			wm=""
 			IFS=':'
-			set -- ${line#?}
+			set -- "${line#?}"
 			while [ $# -gt 0 ] ; do
 				item=$1
 				name=${item#?}
 				case $item in
 					[mM]*)
-						[ $num_mon -lt 2 ] && shift && continue
+						[ "$num_mon" -lt 2 ] && shift && continue
 						case $item in
 							m*)
 								# monitor

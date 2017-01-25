@@ -18,10 +18,6 @@ mpd &
 wmname LG3D &
 dunst &
 
-#clipboard sync
-#autocutsel -fork &
-#autocutsel -selection PRIMARY -fork &
-
 sh ~/.fehbg &
 compton --conf ~/.config/compton.conf &
 sxhkd &

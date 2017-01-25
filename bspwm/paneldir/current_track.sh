@@ -5,7 +5,7 @@ if [[ -z $track ]]
 then
     echo ""
     exit 0
-elif [[ -n $(mpc status | grep paused) ]]
+elif [ "$(mpc status | grep -q paused)" ]
 then
     track="$track " #paused
 else
