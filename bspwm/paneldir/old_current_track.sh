@@ -13,7 +13,7 @@ then
         then
             echo ""
             exit 0
-        elif [[ $(mpc status | grep -q paused) ]]
+        elif mpc status | grep -q paused
         then
             track="$track " #paused
         else

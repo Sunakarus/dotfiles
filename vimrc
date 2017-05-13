@@ -48,6 +48,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+"unmap the 'man' shortcut and instead use it for eol navigation
+nnoremap K $
+
 "buffer option
 set hidden
 
@@ -153,7 +156,7 @@ let g:ycm_confirm_extra_conf = 0
 map <leader>. :CtrlPTag<CR>
 
 "TagBar
-map <Tab> :TagbarToggle<CR>
+map <Tab> :SyntasticReset<CR>
 
 " czech keybinds
 set langmap=+1,ě2,š3,č4,ř5,ž6,ý7,á8,í9,é0,1!,2@,3#,4$,5%,6^,7&,8*

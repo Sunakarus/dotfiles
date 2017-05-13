@@ -120,10 +120,3 @@ alias rm="echo 'Use: trash-put'"
 
 alias sl="ls -lh --color=auto"
 alias gs="git status"
-
-# Prolog
-alias sicstus="rlwrap ~/bin/sicstus4.3.2/bin/sicstus"
-
-# Pintos
-export PATH="$PATH:/home/akarus/pintos/src/utils"
-alias pos="cd /home/akarus/pintos"
