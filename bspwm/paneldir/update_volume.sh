@@ -20,12 +20,15 @@ if [ "$ALSA_STATE" ]
 then
     if [ "$ALSA_VOLUME" -ge 40 ]
     then
-        vol="V $ALSA_VOLUME%" #volUp
+        #vol="V $ALSA_VOLUME%" #volUp
+        vol="V\ue203 $ALSA_VOLUME%" #volUp
     else
-        vol="V $ALSA_VOLUME%" #volDown
+        #vol="V $ALSA_VOLUME%" #volDown
+        vol="V\ue204 $ALSA_VOLUME%" #volDown
     fi
 else
-    vol="V mute"
+    #vol="V mute"
+    vol="V\ue202 mute"
 fi
 
 echo "$vol" >> "$PANEL_FIFO"

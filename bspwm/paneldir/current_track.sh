@@ -7,8 +7,8 @@ then
     exit 0
 elif mpc status | grep -q paused
 then
-    track="$track " #paused
+    track="\ue059 $track" #paused
 else
-    track="$track " #playing
+    track="\ue058 $track" #playing
 fi
-echo "$track"
+echo -e "$track"

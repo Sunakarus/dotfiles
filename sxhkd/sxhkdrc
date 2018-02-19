@@ -23,7 +23,7 @@ XF86AudioMute
     ./dotfiles/bspwm/paneldir/update_volume.sh toggle
 
 Print
-    scrot -e 'mv $f ~/screenshots/'
+    gscreenshot
 
 alt + Print
     scrot -u -e 'mv $f ~/screenshots/'
@@ -32,7 +32,7 @@ ctrl + alt + Print
     scrot -s -e 'mv $f ~/screenshots/'
 
 super + Print
-    shutter -s
+    gscreenshot
 
 super + Home
     mpc toggle

@@ -1,7 +1,8 @@
 #! /bin/sh
 
 PANEL_FONT_FAMILY="TerminessPowerline:size=8"
-ICON_FONT="FontAwesome:size=10"
+ICON_FONT="Font Awesome 5 Free:size=10"
+ICON_FONT1="Font Awesome 5 Brands:size=10"
 ICON_FONT2="-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1"
 UNDERLINE_THICKNESS=1
 
@@ -50,34 +51,35 @@ while true;
 do
     BAT_LEVEL=$(battery | cut -d' ' -f2)
 
-    SYMBOL="" # full battery
+    SYMBOL="\ue24b" # full battery
     if [ "$BAT_LEVEL" -le 100 ] && [ "$BAT_LEVEL" -ge 90 ];
     then
-        SYMBOL="" # full battery
+        SYMBOL="\ue24b" # full battery
     elif [ "$BAT_LEVEL" -lt 90 ] && [ "$BAT_LEVEL" -ge 75 ];
     then
-        SYMBOL="" # 3/4
+        SYMBOL="\ue248" # 3/4
     elif [ "$BAT_LEVEL" -lt 75 ] && [ "$BAT_LEVEL" -ge 40 ];
     then
-        SYMBOL="" # 2/4
+        SYMBOL="\ue247" # 2/4
     elif [ "$BAT_LEVEL" -lt 40 ] && [ "$BAT_LEVEL" -ge 10 ];
     then
-        SYMBOL="" # 1/4
+        SYMBOL="\ue245" # 1/4
     else
-        SYMBOL="" # empty 
+        SYMBOL="\ue242" # empty
     fi
 
     if [ "$BAT_LEVEL" = 100 ];
     then
-        echo "B$SYMBOL $BAT_LEVEL%"
+        echo -e "B$SYMBOL $BAT_LEVEL%"
         sleep 5;
     else
         case "$(battery)" in
         Charging*)
-            echo "B $SYMBOL $BAT_LEVEL%"
+            #echo "B $SYMBOL $BAT_LEVEL%"
+            echo -e "B\ue041 $SYMBOL $BAT_LEVEL%"
         ;;
         *)
-            echo "B$SYMBOL $BAT_LEVEL%"
+            echo -e "B$SYMBOL $BAT_LEVEL%"
         ;;
         esac
     fi
@@ -90,9 +92,9 @@ do
     pac=$(checkupdates | wc -l)
     if [ "$pac" -ge 1 ]
     then
-        echo "P%{A:uxterm -hold -e pacaur -Syu & disown:}  $pac %{A}" #full star 
+        echo -e "P%{A:uxterm -hold -e pacaur -Syu & disown:} \ue1c2 $pac %{A}" #full star 
     else
-        echo "P  $pac " #empty star 
+        echo -e "P \ue1bc $pac " #empty star 
     fi
 sleep 10;
 done > "$PANEL_FIFO" &
@@ -215,7 +217,7 @@ done > "$PANEL_FIFO" &
 
 . panel_colors
 
-panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x"$PANEL_HEIGHT" -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT" -f "$ICON_FONT2" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "$COLOR_UNDERLINE" -u "$UNDERLINE_THICKNESS" | sh &
+panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x"$PANEL_HEIGHT" -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT" -f "$ICON_FONT1" -f "$ICON_FONT2" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "$COLOR_UNDERLINE" -u "$UNDERLINE_THICKNESS" | sh &
 
 wid=$(xdo id -a "$PANEL_WM_NAME")
 tries_left=20

@@ -142,6 +142,7 @@ cnoreabbrev W w
 cnoreabbrev WQ wq
 cnoreabbrev Wq wq
 cnoreabbrev Q q
+cnoreabbrev Qa qa
 
 "syntastic
 let g:syntastic_always_populate_loc_list=1
@@ -160,3 +161,5 @@ map <Tab> :SyntasticReset<CR>
 
 " czech keybinds
 set langmap=+1,ě2,š3,č4,ř5,ž6,ý7,á8,í9,é0,1!,2@,3#,4$,5%,6^,7&,8*
+
+let g:ycm_server_python_interpreter='/usr/bin/python2.7'

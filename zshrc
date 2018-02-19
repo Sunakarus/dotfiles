@@ -6,7 +6,7 @@ export ZSH=/home/akarus/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="bira"
 
-plugins=(git colored-man-pages safe-paste zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git colored-man-pages safe-paste zsh-autosuggestions zsh-syntax-highlighting history-substring-search)
 # User configuration
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/akarus/.gem/ruby/2.3.0/bin"
@@ -120,3 +120,4 @@ alias rm="echo 'Use: trash-put'"
 
 alias sl="ls -lh --color=auto"
 alias gs="git status"
+alias osrs="java -jar ~/Games/KonduitLauncher.jar & disown"
